@@ -1,11 +1,11 @@
-package ru.home.telegram.service.hadler.imp;
+package ru.home.telegram.service.handler.imp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import ru.home.telegram.service.hadler.intf.ICallBackQueryHandler;
+import ru.home.telegram.service.handler.intf.ICallBackQueryHandler;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

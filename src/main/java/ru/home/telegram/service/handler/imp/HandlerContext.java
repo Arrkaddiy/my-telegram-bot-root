@@ -1,9 +1,9 @@
-package ru.home.telegram.service.hadler;
+package ru.home.telegram.service.handler.imp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
-import ru.home.telegram.service.hadler.intf.*;
+import ru.home.telegram.service.handler.intf.*;
 
 @Getter
 @Component
@@ -21,4 +21,5 @@ public class HandlerContext implements IHandlerContext {
     private IPreCheckoutQueryHandler preCheckoutQueryHandler;
     private IPollHandler pollHandler;
     private IPollAnswerHandler pollAnswerHandler;
+
 }

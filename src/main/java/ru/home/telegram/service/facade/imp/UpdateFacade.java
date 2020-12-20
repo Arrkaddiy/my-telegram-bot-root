@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.home.telegram.service.facade.UpdateEntity;
 import ru.home.telegram.service.facade.intf.IUpdateFacade;
-import ru.home.telegram.service.hadler.IHandlerContext;
+import ru.home.telegram.service.handler.intf.IHandlerContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

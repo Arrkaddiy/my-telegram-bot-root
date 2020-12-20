@@ -1,6 +1,4 @@
-package ru.home.telegram.service.hadler;
-
-import ru.home.telegram.service.hadler.intf.*;
+package ru.home.telegram.service.handler.intf;
 
 public interface IHandlerContext {
 

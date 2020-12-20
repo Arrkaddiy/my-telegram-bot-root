@@ -1,99 +1,55 @@
 package ru.home.telegram.service.facade.imp;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.home.telegram.common.UpdateEntity;
-import ru.home.telegram.service.facade.intf.IWebHookBotFacade;
-import ru.home.telegram.service.hadler.imp.*;
+import ru.home.telegram.service.facade.UpdateEntity;
+import ru.home.telegram.service.facade.intf.IUpdateFacade;
+import ru.home.telegram.service.hadler.IHandlerContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
-public class UpdateFacade implements IWebHookBotFacade<Update> {
+@AllArgsConstructor
+public class UpdateFacade implements IUpdateFacade {
     //Логгер
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacade.class);
 
-    @Autowired
-    @Lazy
-    private MessageHandler messageHandler;
-    @Autowired
-    @Lazy
-    private InlineQueryHandler inlineQueryHandler;
-    @Autowired
-    @Lazy
-    private ChosenInlineQueryHandler chosenInlineQueryHandler;
-    @Autowired
-    @Lazy
-    private CallBackQueryHandler callBackQueryHandler;
-    @Autowired
-    @Lazy
-    private EditedMessageHandler editedMessageHandler;
-    @Autowired
-    @Lazy
-    private ChannelPostHandler channelPostHandler;
-    @Autowired
-    @Lazy
-    private EditedChannelPostHandler editedChannelPostHandler;
-    @Autowired
-    @Lazy
-    private ShippingQueryHandler shippingQueryHandler;
-    @Autowired
-    @Lazy
-    private PreCheckoutQueryHandler preCheckoutQueryHandler;
-    @Autowired
-    @Lazy
-    private PollHandler pollHandler;
-    @Autowired
-    @Lazy
-    private PollAnswerHandler pollAnswerHandler;
-
+    private IHandlerContext handlerContext;
 
     @Override
-    public void handle(Update update, TelegramWebhookBot telegramWebhookBot) {
+    public BotApiMethod<?> handle(Update update) {
         LOGGER.info("Обработка события запроса Update: {}", update);
         UpdateEntity updateEntity = UpdateEntity.getUpdateEntity(update);
         switch (updateEntity) {
             case MESSAGE:
-                messageHandler.handle(update.getMessage(), telegramWebhookBot);
-                break;
+                return handlerContext.getMessageHandler().handle(update.getMessage());
             case INLINE_QUERY:
-                inlineQueryHandler.handle(update.getInlineQuery(), telegramWebhookBot);
-                break;
+                return handlerContext.getInlineQueryHandler().handle(update.getInlineQuery());
             case CHOSEN_INLINE_QUERY:
-                chosenInlineQueryHandler.handle(update.getChosenInlineQuery(), telegramWebhookBot);
-                break;
+                return handlerContext.getChosenInlineQueryHandler().handle(update.getChosenInlineQuery());
             case CALL_BACK_QUERY:
-                callBackQueryHandler.handle(update.getCallbackQuery(), telegramWebhookBot);
-                break;
+                return handlerContext.getCallBackQueryHandler().handle(update.getCallbackQuery());
             case EDITED_MESSAGE:
-                editedMessageHandler.handle(update.getEditedMessage(), telegramWebhookBot);
-                break;
+                return handlerContext.getEditedMessageHandler().handle(update.getEditedMessage());
             case CHANNEL_POST:
-                channelPostHandler.handle(update.getChannelPost(), telegramWebhookBot);
-                break;
+                return handlerContext.getChannelPostHandler().handle(update.getChannelPost());
             case EDITED_CHANNEL_POST:
-                editedChannelPostHandler.handle(update.getEditedChannelPost(), telegramWebhookBot);
-                break;
+                return handlerContext.getEditedChannelPostHandler().handle(update.getEditedChannelPost());
             case SHIPPING_QUERY:
-                shippingQueryHandler.handle(update.getShippingQuery(), telegramWebhookBot);
-                break;
+                return handlerContext.getShippingQueryHandler().handle(update.getShippingQuery());
             case PRE_CHECKOUT_QUERY:
-                preCheckoutQueryHandler.handle(update.getPreCheckoutQuery(), telegramWebhookBot);
-                break;
+                return handlerContext.getPreCheckoutQueryHandler().handle(update.getPreCheckoutQuery());
             case POLL:
-                pollHandler.handle(update.getPoll(), telegramWebhookBot);
-                break;
+                return handlerContext.getPollHandler().handle(update.getPoll());
             case POLL_ANSWER:
-                pollAnswerHandler.handle(update.getPollAnswer(), telegramWebhookBot);
-                break;
+                return handlerContext.getPollAnswerHandler().handle(update.getPollAnswer());
             default:
-                throw new IllegalStateException("Не найден маршрут обработки объекта типа" + updateEntity);
+                throw new IllegalStateException("Не найден маршрут обработки объекта типа " + updateEntity);
         }
     }
 

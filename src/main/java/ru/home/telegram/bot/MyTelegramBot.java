@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.home.telegram.service.facade.imp.UpdateFacade;
+import ru.home.telegram.service.facade.intf.IUpdateFacade;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -33,9 +33,9 @@ public class MyTelegramBot extends TelegramWebhookBot {
     @Value("${telegram.bot.webHook}")
     private String botPath;
 
-    private final UpdateFacade updateFacade;
+    private final IUpdateFacade updateFacade;
 
-    public MyTelegramBot(UpdateFacade updateFacade) {
+    public MyTelegramBot(IUpdateFacade updateFacade) {
         this.updateFacade = updateFacade;
     }
 
@@ -43,7 +43,7 @@ public class MyTelegramBot extends TelegramWebhookBot {
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         LOGGER.info("Получен входящий запрос Update: {}", update);
         if (Objects.nonNull(update)) {
-            updateFacade.handle(update, this);
+            return updateFacade.handle(update);
         }
 
         return null;

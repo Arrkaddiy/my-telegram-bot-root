@@ -2,6 +2,7 @@ package ru.home.telegram.controller.intf;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
@@ -22,5 +23,5 @@ public interface IRestController {
      * @param update - Входящий запрос от Telegram {@link Update}
      */
     @PostMapping
-    void onUpdateReceived(@RequestBody Update update);
+    BotApiMethod<?> onUpdateReceived(@RequestBody Update update);
 }

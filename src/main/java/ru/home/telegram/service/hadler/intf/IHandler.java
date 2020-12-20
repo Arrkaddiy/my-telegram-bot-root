@@ -1,8 +1,8 @@
 package ru.home.telegram.service.hadler.intf;
 
-import org.telegram.telegrambots.meta.generics.TelegramBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 
-public interface IHandler<T, B extends TelegramBot> {
+public interface IHandler<T> {
 
-    void handle(T t, B b);
+    BotApiMethod<?> handle(T t);
 }

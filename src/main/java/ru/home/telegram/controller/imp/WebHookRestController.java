@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.home.telegram.bot.MyTelegramBot;
 import ru.home.telegram.controller.intf.IRestController;
@@ -31,9 +32,9 @@ public class WebHookRestController implements IRestController {
      *
      * @param update - Входящий запрос от Telegram Bot {@link Update}
      */
-    public void onUpdateReceived(Update update) {
+    public BotApiMethod<?> onUpdateReceived(Update update) {
         LOGGER.info("Получен входящий запрос Update: {}", update);
-        myTelegramBot.onWebhookUpdateReceived(update);
+        return myTelegramBot.onWebhookUpdateReceived(update);
     }
 
     @PostConstruct

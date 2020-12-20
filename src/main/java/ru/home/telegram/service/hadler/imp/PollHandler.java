@@ -3,21 +3,22 @@ package ru.home.telegram.service.hadler.imp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.polls.Poll;
-import ru.home.telegram.service.hadler.intf.IWebHookBotHandler;
+import ru.home.telegram.service.hadler.intf.IPollHandler;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
-public class PollHandler implements IWebHookBotHandler<Poll> {
+public class PollHandler implements IPollHandler {
     //Логгер
     private static final Logger LOGGER = LoggerFactory.getLogger(PollHandler.class);
 
     @Override
-    public void handle(Poll poll, TelegramWebhookBot telegramWebhookBot) {
+    public BotApiMethod<?> handle(Poll poll) {
         LOGGER.info("Обработка события Poll, объект Poll: {}", poll);
+        return null;
     }
 
     @PostConstruct

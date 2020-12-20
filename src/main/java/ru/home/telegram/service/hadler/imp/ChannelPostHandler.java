@@ -3,21 +3,22 @@ package ru.home.telegram.service.hadler.imp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramWebhookBot;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import ru.home.telegram.service.hadler.intf.IWebHookBotHandler;
+import ru.home.telegram.service.hadler.intf.IChannelPostHandler;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component
-public class ChannelPostHandler implements IWebHookBotHandler<Message> {
+public class ChannelPostHandler implements IChannelPostHandler {
     //Логгер
     private static final Logger LOGGER = LoggerFactory.getLogger(ChannelPostHandler.class);
 
     @Override
-    public void handle(Message message, TelegramWebhookBot telegramWebhookBot) {
+    public BotApiMethod<?> handle(Message message) {
         LOGGER.info("Обработка события ChannelPost, объект Message: {}", message);
+        return null;
     }
 
     @PostConstruct

@@ -1,4 +1,4 @@
-package ru.home.telegram.common;
+package ru.home.telegram.service.facade;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
 

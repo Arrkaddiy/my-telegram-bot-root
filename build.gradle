@@ -1,0 +1,55 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'java'
+}
+
+group 'ru.home.telegram'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //region Spring
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.3.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.3.4.RELEASE'
+    //endregion
+
+    //region Telegram
+    compile group: 'org.telegram', name: 'telegrambots-spring-boot-starter', version: '5.0.1'
+    compile group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
+    //endregion
+
+    //region Postgres
+    compile group: 'org.postgresql', name: 'postgresql'
+    //endregion
+
+    //region Yaml
+    compile group: 'org.yaml', name: 'snakeyaml', version: '1.27'
+    //endregion
+
+    //region Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //endregion
+
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+    //region Test
+    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        exclude group: "com.vaadin.external.google", module:"android-json"
+    }
+    //endregion
+}
+
+test {
+    useJUnitPlatform()
+}

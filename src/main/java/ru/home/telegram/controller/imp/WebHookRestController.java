@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.home.telegram.bot.MyTelegramBot;
+import org.telegram.telegrambots.meta.generics.WebhookBot;
 import ru.home.telegram.controller.intf.IRestController;
 
 import javax.annotation.PostConstruct;
@@ -24,8 +24,8 @@ import javax.annotation.PreDestroy;
 public class WebHookRestController implements IRestController {
     //Логгер
     private static final Logger LOGGER = LoggerFactory.getLogger(WebHookRestController.class);
-    //Bot-обработчик входящих запросов
-    private MyTelegramBot myTelegramBot;
+    //WebHookBot-обработчик входящих запросов
+    private WebhookBot myTelegramBot;
 
     /**
      * Обработка входящего запроса от Telegram Bot

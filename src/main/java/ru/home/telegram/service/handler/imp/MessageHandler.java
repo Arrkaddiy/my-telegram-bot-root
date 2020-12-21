@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.service.handler.intf.IMessageHandler;
 
@@ -18,7 +19,9 @@ public class MessageHandler implements IMessageHandler {
     @Override
     public BotApiMethod<?> handle(Message message) {
         LOGGER.info("Обработка события Message, объект Message: {}", message);
-        return null;
+        String chatId = String.valueOf(message.getChatId());
+        String text = "Hi " + message.getText();
+        return new SendMessage(chatId, text);
     }
 
     @PostConstruct

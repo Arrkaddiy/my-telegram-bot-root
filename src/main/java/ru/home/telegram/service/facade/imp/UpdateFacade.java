@@ -23,7 +23,7 @@ public class UpdateFacade implements IUpdateFacade {
 
     @Override
     public BotApiMethod<?> handle(Update update) {
-        LOGGER.info("Обработка события запроса Update: {}", update);
+        LOGGER.info("Обработка запроса Update: {}", update);
         UpdateEntity updateEntity = UpdateEntity.getUpdateEntity(update);
         switch (updateEntity) {
             case MESSAGE:

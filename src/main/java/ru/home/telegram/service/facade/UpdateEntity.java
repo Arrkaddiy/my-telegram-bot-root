@@ -39,7 +39,7 @@ public enum UpdateEntity {
         } else if (update.hasPollAnswer()) {
             return UpdateEntity.POLL_ANSWER;
         } else {
-            throw new IllegalStateException("Ошибка определения содержания изменений! Не задан объект изменения!");
+            throw new IllegalStateException("Ошибка определения события! Тип события не найден!");
         }
     }
 }

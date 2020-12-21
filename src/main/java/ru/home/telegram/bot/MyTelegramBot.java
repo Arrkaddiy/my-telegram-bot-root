@@ -43,10 +43,17 @@ public class MyTelegramBot extends TelegramWebhookBot {
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         LOGGER.info("Получен входящий запрос Update: {}", update);
         if (Objects.nonNull(update)) {
-            return updateFacade.handle(update);
+            try {
+                return updateFacade.handle(update);
+            } catch (Exception e) {
+                LOGGER.error("В ходе выполнения возникла ошибка {}", e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            LOGGER.error("Получен некорректный запрос!");
+            return null;
         }
-
-        return null;
     }
 
     @PostConstruct

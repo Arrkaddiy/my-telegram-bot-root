@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.home.telegram.db.constant.RepoMessage;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.db.repo.IUserRepository;
-import ru.home.telegram.exception.RepositoryExecuteException;
+import ru.home.telegram.exception.BotRepositoryException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -42,7 +42,7 @@ public class UserService {
             user.setLastUpdate(LocalDateTime.now());
             return repository.save(user);
         } else {
-            throw new RepositoryExecuteException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
         }
     }
 
@@ -60,7 +60,7 @@ public class UserService {
 
             repository.delete(user);
         } else {
-            throw new RepositoryExecuteException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
         }
     }
 

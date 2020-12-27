@@ -44,7 +44,7 @@ public class MyTelegramBot extends TelegramWebhookBot {
         LOGGER.info("Получен входящий запрос Update: {}", update);
         if (Objects.nonNull(update)) {
             try {
-                return updateFacade.handle(update);
+                return updateFacade.route(update);
             } catch (Exception e) {
                 LOGGER.error("В ходе выполнения возникла ошибка {}", e.getMessage());
                 e.printStackTrace();

@@ -10,7 +10,7 @@ import ru.home.telegram.db.constant.RepoMessage;
 import ru.home.telegram.db.entity.Email;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.db.repo.IEmailRepository;
-import ru.home.telegram.exception.RepositoryExecuteException;
+import ru.home.telegram.exception.BotRepositoryException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -44,7 +44,7 @@ public class EmailService {
             email.setLastUpdate(LocalDateTime.now());
             return repository.save(email);
         } else {
-            throw new RepositoryExecuteException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
         }
     }
 
@@ -62,7 +62,7 @@ public class EmailService {
 
             repository.delete(email);
         } else {
-            throw new RepositoryExecuteException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
         }
     }
 

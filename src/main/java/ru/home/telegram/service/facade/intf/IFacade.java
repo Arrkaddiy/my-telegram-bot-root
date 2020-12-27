@@ -4,5 +4,5 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 
 public interface IFacade<T> {
 
-    BotApiMethod<?> handle(T t);
+    BotApiMethod<?> route(T t);
 }

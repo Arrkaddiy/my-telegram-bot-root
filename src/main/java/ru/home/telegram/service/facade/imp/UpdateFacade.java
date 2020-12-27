@@ -22,8 +22,8 @@ public class UpdateFacade implements IUpdateFacade {
     private IHandlerContext handlerContext;
 
     @Override
-    public BotApiMethod<?> handle(Update update) {
-        LOGGER.info("Обработка запроса Update: {}", update);
+    public BotApiMethod<?> route(Update update) {
+        LOGGER.info("Перенаправление на обработку запроса Update: {}", update);
         UpdateEntity updateEntity = UpdateEntity.getUpdateEntity(update);
         switch (updateEntity) {
             case MESSAGE:

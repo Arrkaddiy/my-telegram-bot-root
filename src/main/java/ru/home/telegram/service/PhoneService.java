@@ -10,7 +10,7 @@ import ru.home.telegram.db.constant.RepoMessage;
 import ru.home.telegram.db.entity.Phone;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.db.repo.IPhoneRepository;
-import ru.home.telegram.exception.RepositoryExecuteException;
+import ru.home.telegram.exception.BotRepositoryException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -44,7 +44,7 @@ public class PhoneService {
             phone.setLastUpdate(LocalDateTime.now());
             return repository.save(phone);
         } else {
-            throw new RepositoryExecuteException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
         }
     }
 
@@ -62,7 +62,7 @@ public class PhoneService {
 
             repository.delete(phone);
         } else {
-            throw new RepositoryExecuteException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
         }
     }
 

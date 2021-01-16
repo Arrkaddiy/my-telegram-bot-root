@@ -1,30 +1,22 @@
 package ru.home.telegram.service;
 
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.home.telegram.db.constant.RepoMessage;
 import ru.home.telegram.db.entity.User;
-import ru.home.telegram.db.repo.IUserRepository;
-import ru.home.telegram.exception.BotRepositoryException;
+import ru.home.telegram.repository.UserRepository;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Service
-@AllArgsConstructor
 public class UserService {
-    //Логгер
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-    //Наименование DAO
-    private static final String DAO_NAME = "User";
-    //Репозиторий запросов в БД
-    private IUserRepository repository;
+    @Setter(onMethod_ = {@Autowired})
+    private UserRepository userRepository;
 
     /**
      * Сохранение объекта {@link User}
@@ -34,15 +26,15 @@ public class UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User save(User user) {
-        if (Objects.nonNull(user)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(RepoMessage.SAVE, DAO_NAME, user);
+        if (user != null) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("Сохранение пользователя User: {}", user);
             }
 
             user.setLastUpdate(LocalDateTime.now());
-            return repository.save(user);
+            return userRepository.save(user);
         } else {
-            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new IllegalArgumentException("Объект сохранения не может быть null!");
         }
     }
 
@@ -53,14 +45,14 @@ public class UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(User user) {
-        if (Objects.nonNull(user)) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(RepoMessage.SAVE, DAO_NAME, user);
+        if (user != null) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("Удаление пользователя User Id: {}", user.getId());
             }
 
-            repository.delete(user);
+            userRepository.delete(user);
         } else {
-            throw new BotRepositoryException(RepoMessage.ERROR_OBJECT_NULL);
+            throw new IllegalArgumentException("Объект удаления не может быть null!");
         }
     }
 
@@ -71,11 +63,11 @@ public class UserService {
      * @return Объект {@link User}
      */
     public User getUserById(Long id) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(RepoMessage.FIND_BY_ID, DAO_NAME, id);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Поиск пользователя по ID: {}", id);
         }
 
-        return repository.findById(id).orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 
     /**
@@ -85,22 +77,10 @@ public class UserService {
      * @return Объект {@link User}
      */
     public User getUserByTelegramId(Integer id) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(RepoMessage.FIND_BY_TELEGRAM_ID, DAO_NAME, id);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Поиск пользователя по Telegram ID: {}", id);
         }
 
-        return repository.findByTelegramId(id).orElse(null);
-    }
-
-    @PostConstruct
-    private void initBean() {
-        //Данный метод выполняется после инициализации бина
-        LOGGER.info("UserService initialization");
-    }
-
-    @PreDestroy
-    private void destroyBean() {
-        //Данный метод выполняется перед удалением бина
-        LOGGER.info("UserService destroy");
+        return userRepository.findByTelegramId(id).orElse(null);
     }
 }

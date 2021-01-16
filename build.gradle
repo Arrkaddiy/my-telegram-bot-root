@@ -27,6 +27,8 @@ dependencies {
     compile group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
     //endregion
 
+    implementation group:'com.google.guava', name:'guava', version:'30.1-jre'
+
     //region Postgres
     compile group: 'org.postgresql', name: 'postgresql'
     //endregion

@@ -11,11 +11,9 @@ import java.time.LocalDateTime;
 
 /**
  * Объект хранения данных в БД
- * <p>
+ *
  * В нем описывается структура таблицы, колонки и тд
- * </p>
  */
-
 @Data
 @Entity
 @EqualsAndHashCode(of = {"id", "telegramId"})
@@ -45,7 +43,7 @@ public class User {
     private String realPatronymic;
     @Column(name = "LEAGUE_AUTHORIZE", nullable = false)
     private Boolean authorize;
-    @Column(name = "CURRENT_STATE", nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserState currentState;
 
     public User() {

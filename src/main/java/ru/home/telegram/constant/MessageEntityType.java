@@ -28,7 +28,7 @@ public enum MessageEntityType {
     @Getter
     private String type;
 
-    public static MessageEntityType getBotCommandByType(String type) {
+    public static MessageEntityType getMessageEntityByType(String type) {
         return Arrays.stream(values())
                 .filter(messageEntityType -> messageEntityType.getType().equalsIgnoreCase(type))
                 .findFirst()

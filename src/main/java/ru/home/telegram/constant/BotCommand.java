@@ -15,7 +15,7 @@ public enum BotCommand {
     @Getter
     private String command;
 
-    public static BotCommand getCommandByText(String text) {
+    public static BotCommand getBotCommandByText(String text) {
         return Arrays.stream(values())
                 .filter(botCommand -> botCommand.getCommand().equalsIgnoreCase(text))
                 .findFirst()

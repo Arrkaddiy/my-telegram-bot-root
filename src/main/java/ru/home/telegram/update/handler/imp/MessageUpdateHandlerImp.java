@@ -56,13 +56,13 @@ public class MessageUpdateHandlerImp extends AbstractUpdateHandler implements Me
             isRebaseBot = message.getEntities()
                     .stream()
                     .filter(messageEntity -> MessageEntityType.BOT_COMMAND
-                            .equals(MessageEntityType.getBotCommandByType(messageEntity.getType())))
+                            .equals(MessageEntityType.getMessageEntityByType(messageEntity.getType())))
                     .anyMatch(messageEntity -> BotCommand.START
-                            .equals(BotCommand.getCommandByText(messageEntity.getText())));
+                            .equals(BotCommand.getBotCommandByText(messageEntity.getText())));
         }
 
         if (message.hasText() && !isRebaseBot) {
-            isRebaseBot = BotCommand.START.getCommand().equalsIgnoreCase(message.getText());
+            isRebaseBot = BotCommand.START.equals(BotCommand.getBotCommandByText(message.getText()));
         }
 
         if (LOGGER.isDebugEnabled()) {

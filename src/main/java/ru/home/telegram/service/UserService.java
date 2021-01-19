@@ -22,17 +22,16 @@ public class UserService {
      * Сохранение объекта {@link User}
      *
      * @param user - Пользователь {@link User}
-     * @return Объект {@link User}
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public User save(User user) {
+    public void save(User user) {
         if (user != null) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("Сохранение пользователя User: {}", user);
             }
 
             user.setLastUpdate(LocalDateTime.now());
-            return userRepository.save(user);
+            userRepository.save(user);
         } else {
             throw new IllegalArgumentException("Объект сохранения не может быть null!");
         }

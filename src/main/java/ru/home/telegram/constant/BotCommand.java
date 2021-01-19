@@ -2,7 +2,7 @@ package ru.home.telegram.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import ru.home.telegram.exception.BotRoutingException;
+import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 
 import java.util.Arrays;
 
@@ -10,15 +10,16 @@ import java.util.Arrays;
 public enum BotCommand {
     START("/start"),
     BACK("/back"),
-    HELP("/help");
+    HELP("/help"),
+    NONE("");
 
     @Getter
     private String command;
 
-    public static BotCommand getBotCommandByText(String text) {
+    public static BotCommand getBotCommandByMessageEntity(MessageEntity messageEntity) {
         return Arrays.stream(values())
-                .filter(botCommand -> botCommand.getCommand().equalsIgnoreCase(text))
+                .filter(botCommand -> botCommand.getCommand().equals(messageEntity.getText()))
                 .findFirst()
-                .orElseThrow(BotRoutingException::new);
+                .orElse(NONE);
     }
 }

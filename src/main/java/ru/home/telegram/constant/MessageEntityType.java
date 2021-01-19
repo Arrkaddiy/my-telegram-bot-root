@@ -2,6 +2,7 @@ package ru.home.telegram.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 import ru.home.telegram.exception.BotRoutingException;
 
 import java.util.Arrays;
@@ -28,9 +29,9 @@ public enum MessageEntityType {
     @Getter
     private String type;
 
-    public static MessageEntityType getMessageEntityByType(String type) {
+    public static MessageEntityType getMessageEntityTypeByMessageEntity(MessageEntity messageEntity) {
         return Arrays.stream(values())
-                .filter(messageEntityType -> messageEntityType.getType().equalsIgnoreCase(type))
+                .filter(messageEntityType -> messageEntityType.getType().equalsIgnoreCase(messageEntity.getType()))
                 .findFirst()
                 .orElseThrow(BotRoutingException::new);
     }

@@ -1,6 +1,6 @@
 package ru.home.telegram.constant;
 
-public enum UserState {
+public enum BotStateType {
     NONE,
     START,
     AUTHORIZATION_PHONE,

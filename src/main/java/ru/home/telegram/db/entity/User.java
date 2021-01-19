@@ -1,9 +1,7 @@
 package ru.home.telegram.db.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import ru.home.telegram.constant.UserState;
+import lombok.*;
+import ru.home.telegram.constant.BotStateType;
 import ru.home.telegram.db.constant.DbConstant;
 
 import javax.persistence.*;
@@ -14,8 +12,10 @@ import java.time.LocalDateTime;
  *
  * В нем описывается структура таблицы, колонки и тд
  */
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "telegramId"})
 @ToString(of = {"id", "telegramId", "userName", "firstName", "lastName", "currentState"})
 @Table(name = DbConstant.DB_TABLE_USER, schema = DbConstant.DB_SCHEMA_PUBLIC)
@@ -44,11 +44,7 @@ public class User {
     @Column(name = "LEAGUE_AUTHORIZE", nullable = false)
     private Boolean authorize;
     @Enumerated(EnumType.STRING)
-    private UserState currentState;
-
-    public User() {
-        //Null Constructor
-    }
+    private BotStateType currentState;
 
     public User(Integer telegramId, String firstName, String lastName, String userName) {
         this.creation = LocalDateTime.now();
@@ -58,6 +54,6 @@ public class User {
         this.lastName = lastName;
         this.userName = userName;
         this.authorize = false;
-        this.currentState = UserState.START;
+        this.currentState = BotStateType.START;
     }
 }

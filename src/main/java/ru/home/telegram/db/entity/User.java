@@ -25,8 +25,6 @@ public class User {
     private Long id;
     @Column(name = "CREATION", nullable = false, updatable = false)
     private LocalDateTime creation = LocalDateTime.now();
-    @Column(name = "LAST_UPDATE", nullable = false)
-    private LocalDateTime lastUpdate = LocalDateTime.now();
     @Column(name = "TELEGRAM_ID", nullable = false, unique = true, updatable = false)
     private Integer telegramId;
     @Column(name = "USER_NAME")
@@ -40,10 +38,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private BotStateType currentState = BotStateType.START;
 
-    public User(Integer telegramId, String firstName, String lastName, String userName) {
+    public User(Integer telegramId, String userName, String firstName, String lastName) {
         this.telegramId = telegramId;
+        this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
     }
 }

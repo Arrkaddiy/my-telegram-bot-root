@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+
     private UserRepository userRepository;
 
     /**
@@ -27,8 +28,6 @@ public class UserService {
     public void save(User user) {
         if (user != null) {
             LOGGER.info("Сохранение пользователя User: {}", user);
-
-            user.setLastUpdate(LocalDateTime.now());
             userRepository.save(user);
         } else {
             throw new IllegalArgumentException("Объект сохранения не может быть null!");
@@ -44,7 +43,6 @@ public class UserService {
     public void delete(User user) {
         if (user != null) {
             LOGGER.info("Удаление пользователя User Id: {}", user.getId());
-
             userRepository.delete(user);
         } else {
             throw new IllegalArgumentException("Объект удаления не может быть null!");
@@ -59,7 +57,6 @@ public class UserService {
      */
     public User getUserById(Long id) {
         LOGGER.info("Поиск пользователя по ID: {}", id);
-
         return userRepository.findById(id).orElse(null);
     }
 
@@ -71,7 +68,6 @@ public class UserService {
      */
     public User getUserByTelegramId(Integer id) {
         LOGGER.info("Поиск пользователя по Telegram ID: {}", id);
-
         return userRepository.findByTelegramId(id).orElse(null);
     }
 }

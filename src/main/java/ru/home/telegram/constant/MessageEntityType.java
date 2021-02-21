@@ -3,7 +3,6 @@ package ru.home.telegram.constant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.telegram.telegrambots.meta.api.objects.MessageEntity;
-import ru.home.telegram.exception.BotRoutingException;
 
 import java.util.Arrays;
 
@@ -33,6 +32,6 @@ public enum MessageEntityType {
         return Arrays.stream(values())
                 .filter(messageEntityType -> messageEntityType.getType().equalsIgnoreCase(messageEntity.getType()))
                 .findFirst()
-                .orElseThrow(BotRoutingException::new);
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

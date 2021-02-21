@@ -1,6 +1,6 @@
 package ru.home.telegram.bot;
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +9,17 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.home.telegram.config.ServiceConfiguration;
-import ru.home.telegram.update.facade.intf.UpdateFacade;
+import ru.home.telegram.update.facade.UpdateFacade;
 
 /**
  * Telegram Bot
  */
 
 @Component
+@AllArgsConstructor(onConstructor_ = {@Autowired})
 public class WelcomeTelegramBot extends TelegramWebhookBot {
     private static final Logger LOGGER = LoggerFactory.getLogger(WelcomeTelegramBot.class);
-    @Setter(onMethod_ = {@Autowired})
     private UpdateFacade updateFacade;
-    @Setter(onMethod_ = {@Autowired})
     private ServiceConfiguration serviceConfiguration;
 
     /**
@@ -32,25 +31,15 @@ public class WelcomeTelegramBot extends TelegramWebhookBot {
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (update != null) {
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("Получен входящий запрос Update Id: {}", update.getUpdateId());
-            }
-
+            LOGGER.info("Получен входящий запрос Update Id: {}", update.getUpdateId());
             try {
                 return updateFacade.route(update);
             } catch (Exception e) {
-                if (LOGGER.isErrorEnabled()) {
-                    LOGGER.error("В ходе обработки запроса возникла ошибка! Exception: {}", e.getMessage());
-                }
-
-                e.printStackTrace();
+                LOGGER.error("В ходе обработки запроса возникла ошибка! Exception: {}", e.getMessage(), e);
                 return null;
             }
         } else {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Входящий запрос Update не может быть null!");
-            }
-
+            LOGGER.error("Входящий запрос Update не может быть null!");
             return null;
         }
     }

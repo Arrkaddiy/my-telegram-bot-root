@@ -1,6 +1,6 @@
 package ru.home.telegram.service;
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.home.telegram.db.entity.Authorization;
 import ru.home.telegram.db.entity.User;
-import ru.home.telegram.repository.AuthorizationRepository;
+import ru.home.telegram.db.repository.AuthorizationRepository;
 
 import java.time.LocalDateTime;
 
 @Service
+@AllArgsConstructor(onConstructor_ = {@Autowired})
 public class AuthorizationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationService.class);
-    @Setter(onMethod_ = {@Autowired})
     private AuthorizationRepository authorizationRepository;
 
     /**
@@ -27,9 +27,7 @@ public class AuthorizationService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(Authorization authorization) {
         if (authorization != null) {
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("Сохранение данных Authorization: {}", authorization);
-            }
+            LOGGER.info("Сохранение данных Authorization: {}", authorization);
 
             authorization.setLastUpdate(LocalDateTime.now());
             authorizationRepository.save(authorization);
@@ -45,9 +43,7 @@ public class AuthorizationService {
      * @return Объект {@link Authorization}
      */
     public Authorization getAuthorizationByUser(User user) {
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Поиск данных по User: {}", user.getId());
-        }
+        LOGGER.info("Поиск данных по User: {}", user.getId());
 
         return authorizationRepository.findByUser(user).orElse(null);
     }

@@ -1,7 +1,7 @@
 package ru.home.telegram.db.entity;
 
 import lombok.*;
-import ru.home.telegram.db.constant.DbConstant;
+import ru.home.telegram.db.constant.DBConstant;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id"})
-@Table(name = DbConstant.DB_TABLE_AUTHORIZATION, schema = DbConstant.DB_SCHEMA_PUBLIC)
+@Table(name = DBConstant.DB_TABLE_AUTHORIZATION, schema = DBConstant.DB_SCHEMA_PUBLIC)
 public class Authorization {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

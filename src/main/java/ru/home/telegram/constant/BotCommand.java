@@ -10,8 +10,7 @@ import java.util.Arrays;
 public enum BotCommand {
     START("/start"),
     BACK("/back"),
-    HELP("/help"),
-    NONE("");
+    HELP("/help");
 
     @Getter
     private String command;
@@ -20,6 +19,6 @@ public enum BotCommand {
         return Arrays.stream(values())
                 .filter(botCommand -> botCommand.getCommand().equals(messageEntity.getText()))
                 .findFirst()
-                .orElse(NONE);
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

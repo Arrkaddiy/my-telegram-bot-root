@@ -14,7 +14,7 @@ public class PollHandlerImp implements PollHandler {
 
     @Override
     public BotApiMethod<?> handle(Poll poll) {
-        LOGGER.info("Обработка события Poll, объект Poll: {}", poll);
+        LOGGER.info("Обработка события Poll, объект Poll Id: {}", poll.getId());
         return null;
     }
 }

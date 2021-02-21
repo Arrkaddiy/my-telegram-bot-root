@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -22,11 +23,15 @@ import ru.home.telegram.update.handler.pollanswer.PollAnswerHandler;
 import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryHandler;
 import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 
-@Service
+@Component
 @Qualifier(value = "updateFacade")
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class UpdateFacadeImp implements UpdateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImp.class);
+    private static final String ROUTE_UPDATE = "Маршрутизация входящего запроса Update Id: {}";
+    private static final String ROUTE_UPDATE_ERROR = "Ошибка маршрутизации входящего запроса! Exception: {}";
+    private static final String GET_UPDATE_CONTEXT = "Определен контекст входящего запроса UpdateContext: {}";
+    private static final String CONTEXT_ERROR_NOT_FOUND = "Не найдена реализация обработки контекста:";
 
     private MessageHandler messageHandler;
     private InlineQueryHandler inlineQueryHandler;
@@ -48,12 +53,12 @@ public class UpdateFacadeImp implements UpdateFacade {
      */
     @Override
     public BotApiMethod<?> route(Update update) {
-        LOGGER.info("Маршрутизация входящего запроса Update Id: {}", update.getUpdateId());
+        LOGGER.info(ROUTE_UPDATE, update.getUpdateId());
 
         try {
             UpdateContext updateContext = UpdateContext.getUpdateContext(update);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Определен контекст входящего запроса UpdateContext: {}", updateContext);
+                LOGGER.debug(GET_UPDATE_CONTEXT, updateContext);
             }
 
             switch (updateContext) {
@@ -80,10 +85,10 @@ public class UpdateFacadeImp implements UpdateFacade {
                 case POLL_ANSWER:
                     return pollAnswerHandler.handle(update.getPollAnswer());
                 default:
-                    throw new BotRoutingException("Не найден маршрут обработки контекста: " + updateContext);
+                    throw new BotRoutingException(CONTEXT_ERROR_NOT_FOUND + updateContext);
             }
         } catch (BotRoutingException bre) {
-            LOGGER.error("Ошибка маршрутизации входящего запроса! Exception: {}", bre.getMessage(), bre);
+            LOGGER.error(ROUTE_UPDATE_ERROR, bre.getMessage(), bre);
             return null;
         }
     }

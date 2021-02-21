@@ -1,10 +1,21 @@
 package ru.home.telegram.db.entity;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import ru.home.telegram.constant.BotStateType;
 import ru.home.telegram.db.constant.DBConstant;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -33,8 +44,6 @@ public class User {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
-    @Column(name = "LEAGUE_AUTHORIZE", nullable = false)
-    private Boolean authorize = Boolean.FALSE;
     @Enumerated(EnumType.STRING)
     private BotStateType currentState = BotStateType.START;
 

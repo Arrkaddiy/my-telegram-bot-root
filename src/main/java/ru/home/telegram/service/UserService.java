@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.db.repository.UserRepository;
 
-import java.time.LocalDateTime;
-
 @Service
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class UserService {

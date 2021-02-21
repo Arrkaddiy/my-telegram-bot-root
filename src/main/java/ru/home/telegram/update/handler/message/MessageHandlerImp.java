@@ -12,10 +12,10 @@ import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
 
 @Component
-@Qualifier(value = "messageUpdateHandler")
+@Qualifier(value = "messageHandler")
 @AllArgsConstructor(onConstructor_ = {@Autowired})
-public class MessageUpdateHandlerImp implements MessageUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageUpdateHandlerImp.class);
+public class MessageHandlerImp implements MessageHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageHandlerImp.class);
     private UserService userService;
 
     /**
@@ -27,7 +27,6 @@ public class MessageUpdateHandlerImp implements MessageUpdateHandler {
     @Override
     public BotApiMethod<?> handle(Message message) {
         LOGGER.info("Обработка события Message, объект Message: {}", message);
-        User user = getUser(message.getFrom());
         return null;
     }
 

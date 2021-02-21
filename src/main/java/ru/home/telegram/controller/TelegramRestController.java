@@ -1,4 +1,4 @@
-package ru.home.telegram.controller.intf;
+package ru.home.telegram.controller;
 
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;

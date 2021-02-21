@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
-@Qualifier(value = "editedChannelPostUpdateHandler")
-public class EditedChannelPostUpdateHandlerImp implements EditedChannelPostUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EditedChannelPostUpdateHandlerImp.class);
+@Qualifier(value = "editedChannelPostHandler")
+public class EditedChannelPostHandlerImp implements EditedChannelPostHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditedChannelPostHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(Message message) {

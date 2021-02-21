@@ -8,19 +8,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.home.telegram.update.constant.UpdateContext;
 import ru.home.telegram.exception.BotRoutingException;
-import ru.home.telegram.update.handler.callbackquery.CallBackQueryUpdateHandler;
-import ru.home.telegram.update.handler.channelpost.ChannelPostUpdateHandler;
-import ru.home.telegram.update.handler.choseninlinequery.ChosenInlineQueryUpdateHandler;
-import ru.home.telegram.update.handler.editedchannelpost.EditedChannelPostUpdateHandler;
-import ru.home.telegram.update.handler.editedmessageupdate.EditedMessageUpdateHandler;
-import ru.home.telegram.update.handler.inlinequery.InlineQueryUpdateHandler;
-import ru.home.telegram.update.handler.message.MessageUpdateHandler;
-import ru.home.telegram.update.handler.poll.PollUpdateHandler;
-import ru.home.telegram.update.handler.pollanswer.PollAnswerUpdateHandler;
-import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryUpdateHandler;
-import ru.home.telegram.update.handler.shippingquery.ShippingQueryUpdateHandler;
+import ru.home.telegram.update.constant.UpdateContext;
+import ru.home.telegram.update.handler.callbackquery.CallBackQueryHandler;
+import ru.home.telegram.update.handler.channelpost.ChannelPostHandler;
+import ru.home.telegram.update.handler.choseninlinequery.ChosenInlineQueryHandler;
+import ru.home.telegram.update.handler.editedchannelpost.EditedChannelPostHandler;
+import ru.home.telegram.update.handler.editedmessage.EditedMessageHandler;
+import ru.home.telegram.update.handler.inlinequery.InlineQueryHandler;
+import ru.home.telegram.update.handler.message.MessageHandler;
+import ru.home.telegram.update.handler.poll.PollHandler;
+import ru.home.telegram.update.handler.pollanswer.PollAnswerHandler;
+import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryHandler;
+import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 
 @Service
 @Qualifier(value = "updateFacade")
@@ -28,17 +28,17 @@ import ru.home.telegram.update.handler.shippingquery.ShippingQueryUpdateHandler;
 public class UpdateFacadeImp implements UpdateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImp.class);
 
-    private MessageUpdateHandler messageUpdateHandler;
-    private InlineQueryUpdateHandler inlineQueryUpdateHandler;
-    private ChosenInlineQueryUpdateHandler chosenInlineQueryUpdateHandler;
-    private CallBackQueryUpdateHandler callBackQueryUpdateHandler;
-    private EditedMessageUpdateHandler editedMessageUpdateHandler;
-    private ChannelPostUpdateHandler channelPostUpdateHandler;
-    private EditedChannelPostUpdateHandler editedChannelPostUpdateHandler;
-    private ShippingQueryUpdateHandler shippingQueryUpdateHandler;
-    private PreCheckoutQueryUpdateHandler preCheckoutQueryUpdateHandler;
-    private PollUpdateHandler pollUpdateHandler;
-    private PollAnswerUpdateHandler pollAnswerUpdateHandler;
+    private MessageHandler messageHandler;
+    private InlineQueryHandler inlineQueryHandler;
+    private ChosenInlineQueryHandler chosenInlineQueryHandler;
+    private CallBackQueryHandler callBackQueryHandler;
+    private EditedMessageHandler editedMessageHandler;
+    private ChannelPostHandler channelPostHandler;
+    private EditedChannelPostHandler editedChannelPostHandler;
+    private ShippingQueryHandler shippingQueryHandler;
+    private PreCheckoutQueryHandler preCheckoutQueryHandler;
+    private PollHandler pollHandler;
+    private PollAnswerHandler pollAnswerHandler;
 
     /**
      * Маршрутизация входящего запроса
@@ -58,27 +58,27 @@ public class UpdateFacadeImp implements UpdateFacade {
 
             switch (updateContext) {
                 case MESSAGE:
-                    return messageUpdateHandler.handle(update.getMessage());
+                    return messageHandler.handle(update.getMessage());
                 case INLINE_QUERY:
-                    return inlineQueryUpdateHandler.handle(update.getInlineQuery());
+                    return inlineQueryHandler.handle(update.getInlineQuery());
                 case CHOSEN_INLINE_QUERY:
-                    return chosenInlineQueryUpdateHandler.handle(update.getChosenInlineQuery());
+                    return chosenInlineQueryHandler.handle(update.getChosenInlineQuery());
                 case CALL_BACK_QUERY:
-                    return callBackQueryUpdateHandler.handle(update.getCallbackQuery());
+                    return callBackQueryHandler.handle(update.getCallbackQuery());
                 case EDITED_MESSAGE:
-                    return editedMessageUpdateHandler.handle(update.getEditedMessage());
+                    return editedMessageHandler.handle(update.getEditedMessage());
                 case CHANNEL_POST:
-                    return channelPostUpdateHandler.handle(update.getChannelPost());
+                    return channelPostHandler.handle(update.getChannelPost());
                 case EDITED_CHANNEL_POST:
-                    return editedChannelPostUpdateHandler.handle(update.getEditedChannelPost());
+                    return editedChannelPostHandler.handle(update.getEditedChannelPost());
                 case SHIPPING_QUERY:
-                    return shippingQueryUpdateHandler.handle(update.getShippingQuery());
+                    return shippingQueryHandler.handle(update.getShippingQuery());
                 case PRE_CHECKOUT_QUERY:
-                    return preCheckoutQueryUpdateHandler.handle(update.getPreCheckoutQuery());
+                    return preCheckoutQueryHandler.handle(update.getPreCheckoutQuery());
                 case POLL:
-                    return pollUpdateHandler.handle(update.getPoll());
+                    return pollHandler.handle(update.getPoll());
                 case POLL_ANSWER:
-                    return pollAnswerUpdateHandler.handle(update.getPollAnswer());
+                    return pollAnswerHandler.handle(update.getPollAnswer());
                 default:
                     throw new BotRoutingException("Не найден маршрут обработки контекста: " + updateContext);
             }

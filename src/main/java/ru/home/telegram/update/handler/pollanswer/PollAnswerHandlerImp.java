@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.polls.PollAnswer;
 
 @Component
-@Qualifier(value = "pollAnswerUpdateHandler")
-public class PollAnswerUpdateHandlerImp implements PollAnswerUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PollAnswerUpdateHandlerImp.class);
+@Qualifier(value = "pollAnswerHandler")
+public class PollAnswerHandlerImp implements PollAnswerHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PollAnswerHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(PollAnswer pollAnswer) {

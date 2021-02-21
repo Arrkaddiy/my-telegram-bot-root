@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.InlineQuery;
 
 @Component
-@Qualifier(value = "inlineQueryUpdateHandler")
-public class InlineQueryUpdateHandlerImp implements InlineQueryUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InlineQueryUpdateHandlerImp.class);
+@Qualifier(value = "inlineQueryHandler")
+public class InlineQueryHandlerImp implements InlineQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InlineQueryHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(InlineQuery inlineQuery) {

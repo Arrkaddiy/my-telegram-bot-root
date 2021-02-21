@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.payments.PreCheckoutQuery;
 
 @Component
-@Qualifier(value = "preCheckoutQueryUpdateHandler")
-public class PreCheckoutQueryUpdateHandlerImp implements PreCheckoutQueryUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PreCheckoutQueryUpdateHandlerImp.class);
+@Qualifier(value = "preCheckoutQueryHandler")
+public class PreCheckoutQueryHandlerImp implements PreCheckoutQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PreCheckoutQueryHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(PreCheckoutQuery preCheckoutQuery) {

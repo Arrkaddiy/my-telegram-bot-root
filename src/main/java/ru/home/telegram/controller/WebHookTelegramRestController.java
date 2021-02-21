@@ -1,4 +1,4 @@
-package ru.home.telegram.controller.imp;
+package ru.home.telegram.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.generics.WebhookBot;
-import ru.home.telegram.controller.intf.TelegramRestController;
 
 /**
  * Rest-контроллера запросов от Telegram Bot через WebHook
@@ -19,7 +18,7 @@ import ru.home.telegram.controller.intf.TelegramRestController;
 @RestController
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class WebHookTelegramRestController implements TelegramRestController {
-    private WebhookBot welcomeTelegramBot;
+    private WebhookBot myTelegramBot;
 
     /**
      * Контроллер входящих Post-запросов от Telegram Bot
@@ -28,6 +27,6 @@ public class WebHookTelegramRestController implements TelegramRestController {
      */
     @PostMapping
     public BotApiMethod<?> onUpdateReceived(@RequestBody Update update) {
-        return welcomeTelegramBot.onWebhookUpdateReceived(update);
+        return myTelegramBot.onWebhookUpdateReceived(update);
     }
 }

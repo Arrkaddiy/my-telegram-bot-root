@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 @Component
-@Qualifier(value = "callBackQueryUpdateHandler")
-public class CallBackQueryUpdateHandlerImp implements CallBackQueryUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CallBackQueryUpdateHandlerImp.class);
+@Qualifier(value = "callBackQueryHandler")
+public class CallBackQueryHandlerImp implements CallBackQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CallBackQueryHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(CallbackQuery callbackQuery) {

@@ -17,8 +17,9 @@ import ru.home.telegram.update.facade.UpdateFacade;
 
 @Component
 @AllArgsConstructor(onConstructor_ = {@Autowired})
-public class WelcomeTelegramBot extends TelegramWebhookBot {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WelcomeTelegramBot.class);
+public class MyTelegramBot extends TelegramWebhookBot {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyTelegramBot.class);
+
     private UpdateFacade updateFacade;
     private ServiceConfiguration serviceConfiguration;
 

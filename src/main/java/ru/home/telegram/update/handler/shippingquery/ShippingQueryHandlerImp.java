@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.payments.ShippingQuery;
 
 @Component
-@Qualifier(value = "shippingQueryUpdateHandler")
-public class ShippingQueryUpdateHandlerImp implements ShippingQueryUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShippingQueryUpdateHandlerImp.class);
+@Qualifier(value = "shippingQueryHandler")
+public class ShippingQueryHandlerImp implements ShippingQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShippingQueryHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(ShippingQuery shippingQuery) {

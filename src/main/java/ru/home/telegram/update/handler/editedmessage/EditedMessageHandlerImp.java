@@ -1,4 +1,4 @@
-package ru.home.telegram.update.handler.editedmessageupdate;
+package ru.home.telegram.update.handler.editedmessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,9 +8,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 @Component
-@Qualifier(value = "editedMessageUpdateHandler")
-public class EditedMessageUpdateHandlerImp implements EditedMessageUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EditedMessageUpdateHandlerImp.class);
+@Qualifier(value = "editedMessageHandler")
+public class EditedMessageHandlerImp implements EditedMessageHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EditedMessageHandlerImp.class);
 
     @Override
     public BotApiMethod<?> handle(Message message) {

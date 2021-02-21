@@ -9,7 +9,6 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum BotCommand {
     START("/start"),
-    BACK("/back"),
     HELP("/help");
 
     @Getter

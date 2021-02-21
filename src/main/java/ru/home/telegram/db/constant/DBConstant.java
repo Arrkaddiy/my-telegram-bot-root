@@ -9,10 +9,6 @@ public final class DBConstant {
      * Наименование таблицы пользователей
      */
     public static final String DB_TABLE_USER = "bot_user";
-    /**
-     * Наименование таблицы записей авторизации
-     */
-    public static final String DB_TABLE_AUTHORIZATION = "bot_authorization";
 
     private DBConstant() {
         throw new IllegalStateException("This is utility class");

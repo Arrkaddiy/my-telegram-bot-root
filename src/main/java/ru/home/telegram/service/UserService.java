@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.db.repository.UserRepository;
 
+import java.time.LocalDateTime;
+
 @Service
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class UserService {
@@ -25,7 +27,12 @@ public class UserService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(User user) {
         if (user != null) {
-            LOGGER.info("Сохранение пользователя User: {}", user);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Сохранение пользователя User: {}", user);
+            } else {
+                LOGGER.info("Сохранение пользователя User Id {}", user.getId());
+            }
+            user.setUpdatable(LocalDateTime.now());
             userRepository.save(user);
         } else {
             throw new IllegalArgumentException("Объект сохранения не может быть null!");
@@ -40,7 +47,12 @@ public class UserService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(User user) {
         if (user != null) {
-            LOGGER.info("Удаление пользователя User Id: {}", user.getId());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Удаление пользователя User: {}", user);
+            } else {
+                LOGGER.info("Удаление пользователя User Id: {}", user.getId());
+            }
+
             userRepository.delete(user);
         } else {
             throw new IllegalArgumentException("Объект удаления не может быть null!");

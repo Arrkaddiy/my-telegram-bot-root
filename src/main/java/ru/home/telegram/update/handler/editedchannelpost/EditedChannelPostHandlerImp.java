@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.exception.BotRoutingException;
@@ -19,17 +18,22 @@ public class EditedChannelPostHandlerImp extends AbstractUpdateHandler implement
 
     @Override
     public BotApiMethod<?> handle(Message message) {
-        LOGGER.info("Обработка события EditedChannelPost, объект Message Id: {}", message.getMessageId());
-        User user = getUser(message.getFrom());
-        try {
-            State state = getState(user);
-            return state.handleEditChannelPost(user, message);
-        } catch (BotRoutingException bre) {
-            LOGGER.error("", bre);
-            SendMessage errorMessage = new SendMessage();
-            errorMessage.setChatId(String.valueOf(message.getChatId()));
-            errorMessage.setText("");
-            return errorMessage;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Обработка события EditedChannelPost, объект Message: {}", message);
+        } else {
+            LOGGER.info("Обработка события EditedChannelPost, объект Message Id: {}", message.getMessageId());
         }
+
+        State state;
+        User user = getUser(message.getFrom());
+
+        try {
+            state = getState(user);
+        } catch (BotRoutingException bre) {
+            LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
+            return getErrorStateMessage(user);
+        }
+
+        return state.handleEditChannelPost(user, message);
     }
 }

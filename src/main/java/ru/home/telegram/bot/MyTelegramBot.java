@@ -14,7 +14,6 @@ import ru.home.telegram.update.facade.UpdateFacade;
 /**
  * Telegram Bot
  */
-
 @Component
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class MyTelegramBot extends TelegramWebhookBot {
@@ -32,7 +31,12 @@ public class MyTelegramBot extends TelegramWebhookBot {
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (update != null) {
-            LOGGER.info("Получен входящий запрос Update Id: {}", update.getUpdateId());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Получен входящий запрос Update: {}", update);
+            } else {
+                LOGGER.info("Получен входящий запрос Update Id: {}", update.getUpdateId());
+            }
+
             try {
                 return updateFacade.route(update);
             } catch (Exception e) {

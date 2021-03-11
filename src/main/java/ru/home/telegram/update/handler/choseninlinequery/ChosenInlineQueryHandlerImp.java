@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.ChosenInlineQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.exception.BotRoutingException;
@@ -19,17 +18,22 @@ public class ChosenInlineQueryHandlerImp extends AbstractUpdateHandler implement
 
     @Override
     public BotApiMethod<?> handle(ChosenInlineQuery chosenInlineQuery) {
-        LOGGER.info("Обработка события ChosenInlineQuery, объект ChosenInlineQuery ResultId: {}", chosenInlineQuery.getResultId());
-        User user = getUser(chosenInlineQuery.getFrom());
-        try {
-            State state = getState(user);
-            return state.handleChosenInlineQuery(user, chosenInlineQuery);
-        } catch (BotRoutingException bre) {
-            LOGGER.error("", bre);
-            SendMessage errorMessage = new SendMessage();
-            errorMessage.setChatId(String.valueOf(user.getTelegramId()));
-            errorMessage.setText("");
-            return errorMessage;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Обработка события ChosenInlineQuery, объект ChosenInlineQuery: {}", chosenInlineQuery);
+        } else {
+            LOGGER.info("Обработка события ChosenInlineQuery, объект ChosenInlineQuery ResultId: {}", chosenInlineQuery.getResultId());
         }
+
+        State state;
+        User user = getUser(chosenInlineQuery.getFrom());
+
+        try {
+            state = getState(user);
+        } catch (BotRoutingException bre) {
+            LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
+            return getErrorStateMessage(user);
+        }
+
+        return state.handleChosenInlineQuery(user, chosenInlineQuery);
     }
 }

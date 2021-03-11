@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.payments.PreCheckoutQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.exception.BotRoutingException;
@@ -19,17 +18,22 @@ public class PreCheckoutQueryHandlerImp extends AbstractUpdateHandler implements
 
     @Override
     public BotApiMethod<?> handle(PreCheckoutQuery preCheckoutQuery) {
-        LOGGER.info("Обработка события PreCheckoutQuery, объект PreCheckoutQuery Id: {}", preCheckoutQuery.getId());
-        User user = getUser(preCheckoutQuery.getFrom());
-        try {
-            State state = getState(user);
-            return state.handlePreCheckoutQuery(user, preCheckoutQuery);
-        } catch (BotRoutingException bre) {
-            LOGGER.error("", bre);
-            SendMessage errorMessage = new SendMessage();
-            errorMessage.setChatId(String.valueOf(user.getTelegramId()));
-            errorMessage.setText("");
-            return errorMessage;
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Обработка события PreCheckoutQuery, объект PreCheckoutQuery: {}", preCheckoutQuery);
+        } else {
+            LOGGER.info("Обработка события PreCheckoutQuery, объект PreCheckoutQuery Id: {}", preCheckoutQuery.getId());
         }
+
+        State state;
+        User user = getUser(preCheckoutQuery.getFrom());
+
+        try {
+            state = getState(user);
+        } catch (BotRoutingException bre) {
+            LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
+            return getErrorStateMessage(user);
+        }
+
+        return state.handlePreCheckoutQuery(user, preCheckoutQuery);
     }
 }

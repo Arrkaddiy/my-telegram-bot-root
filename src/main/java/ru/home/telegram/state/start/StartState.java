@@ -16,32 +16,32 @@ public interface StartState extends State {
 
     @Override
     default BotApiMethod<?> handleCallBackQuery(User user, CallbackQuery callbackQuery) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handleChannelPost(User user, Message message) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handleChosenInlineQuery(User user, ChosenInlineQuery chosenInlineQuery) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handleEditChannelPost(User user, Message message) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handleEditedMessage(User user, Message message) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handleInlineQuery(User user, InlineQuery inlineQuery) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
@@ -51,16 +51,16 @@ public interface StartState extends State {
 
     @Override
     default BotApiMethod<?> handlePollAnswer(User user, PollAnswer pollAnswer) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handlePreCheckoutQuery(User user, PreCheckoutQuery preCheckoutQuery) {
-        return sendErrorMessage(user);
+        return null;
     }
 
     @Override
     default BotApiMethod<?> handleShippingQuery(User user, ShippingQuery shippingQuery) {
-        return sendErrorMessage(user);
+        return null;
     }
 }

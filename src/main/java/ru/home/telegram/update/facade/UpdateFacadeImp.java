@@ -1,9 +1,8 @@
 package ru.home.telegram.update.facade;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -23,22 +22,22 @@ import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryHandler;
 import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 
 @Component
+@RequiredArgsConstructor
 @Qualifier(value = "updateFacade")
-@AllArgsConstructor(onConstructor_ = {@Autowired})
 public class UpdateFacadeImp implements UpdateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImp.class);
 
-    private MessageHandler messageHandler;
-    private InlineQueryHandler inlineQueryHandler;
-    private ChosenInlineQueryHandler chosenInlineQueryHandler;
-    private CallBackQueryHandler callBackQueryHandler;
-    private EditedMessageHandler editedMessageHandler;
-    private ChannelPostHandler channelPostHandler;
-    private EditedChannelPostHandler editedChannelPostHandler;
-    private ShippingQueryHandler shippingQueryHandler;
-    private PreCheckoutQueryHandler preCheckoutQueryHandler;
-    private PollHandler pollHandler;
-    private PollAnswerHandler pollAnswerHandler;
+    private final MessageHandler messageHandler;
+    private final InlineQueryHandler inlineQueryHandler;
+    private final ChosenInlineQueryHandler chosenInlineQueryHandler;
+    private final CallBackQueryHandler callBackQueryHandler;
+    private final EditedMessageHandler editedMessageHandler;
+    private final ChannelPostHandler channelPostHandler;
+    private final EditedChannelPostHandler editedChannelPostHandler;
+    private final ShippingQueryHandler shippingQueryHandler;
+    private final PreCheckoutQueryHandler preCheckoutQueryHandler;
+    private final PollHandler pollHandler;
+    private final PollAnswerHandler pollAnswerHandler;
 
     /**
      * Маршрутизация входящего запроса

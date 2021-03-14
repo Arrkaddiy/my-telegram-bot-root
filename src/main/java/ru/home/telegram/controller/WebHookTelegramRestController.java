@@ -1,7 +1,6 @@
 package ru.home.telegram.controller;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +15,10 @@ import org.telegram.telegrambots.meta.generics.WebhookBot;
  * Анатация @RestController, говорит нам, что данный класс является Rest-контроллером
  */
 @RestController
-@AllArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class WebHookTelegramRestController implements TelegramRestController {
-    private WebhookBot myTelegramBot;
+
+    private final WebhookBot myTelegramBot;
 
     /**
      * Контроллер входящих Post-запросов от Telegram Bot

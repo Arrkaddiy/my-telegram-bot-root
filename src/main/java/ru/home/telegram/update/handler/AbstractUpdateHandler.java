@@ -1,9 +1,8 @@
 package ru.home.telegram.update.handler;
 
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
@@ -11,13 +10,12 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
 
+@RequiredArgsConstructor
 public abstract class AbstractUpdateHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractUpdateHandler.class);
 
-    @Setter(onMethod_ = {@Autowired})
-    private UserService userService;
-    @Setter(onMethod_ = {@Autowired})
-    private StateFacade stateFacade;
+    private final UserService userService;
+    private final StateFacade stateFacade;
 
     protected User getUser(org.telegram.telegrambots.meta.api.objects.User telegramUser) {
         Integer telegramUserId = telegramUser.getId();

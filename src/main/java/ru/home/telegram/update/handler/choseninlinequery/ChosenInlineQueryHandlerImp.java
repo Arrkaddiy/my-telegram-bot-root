@@ -8,13 +8,19 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.ChosenInlineQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.exception.BotRoutingException;
+import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.State;
+import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Component
 @Qualifier(value = "chosenInlineQueryHandler")
 public class ChosenInlineQueryHandlerImp extends AbstractUpdateHandler implements ChosenInlineQueryHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChosenInlineQueryHandlerImp.class);
+
+    public ChosenInlineQueryHandlerImp(UserService userService, StateFacade stateFacade) {
+        super(userService, stateFacade);
+    }
 
     @Override
     public BotApiMethod<?> handle(ChosenInlineQuery chosenInlineQuery) {

@@ -26,9 +26,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = {"id", "telegramId"})
-@ToString(of = {"id", "telegramId", "userName", "firstName", "lastName", "currentState"})
 @Table(name = DBConstant.DB_TABLE_USER, schema = DBConstant.DB_SCHEMA_PUBLIC)
 public class User {
 

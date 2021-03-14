@@ -36,6 +36,4 @@ public interface State {
 
     BotApiMethod<?> handleShippingQuery(User user, ShippingQuery shippingQuery);
 
-    SendMessage sendErrorMessage(User user);
-
 }

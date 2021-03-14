@@ -1,9 +1,8 @@
 package ru.home.telegram.bot;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -15,12 +14,12 @@ import ru.home.telegram.update.facade.UpdateFacade;
  * Telegram Bot
  */
 @Component
-@AllArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class MyTelegramBot extends TelegramWebhookBot {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTelegramBot.class);
 
-    private UpdateFacade updateFacade;
-    private ServiceConfiguration serviceConfiguration;
+    private final UpdateFacade updateFacade;
+    private final ServiceConfiguration serviceConfiguration;
 
     /**
      * Телеграм-бот обработчик входящий запросов

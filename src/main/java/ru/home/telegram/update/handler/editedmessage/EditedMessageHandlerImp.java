@@ -37,7 +37,7 @@ public class EditedMessageHandlerImp extends AbstractUpdateHandler implements Ed
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(user);
+            return getErrorStateMessage(null);
         }
 
         return state.handleEditedMessage(user, message);

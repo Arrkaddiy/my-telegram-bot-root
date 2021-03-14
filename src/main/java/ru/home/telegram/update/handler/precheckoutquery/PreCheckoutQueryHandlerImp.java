@@ -37,7 +37,7 @@ public class PreCheckoutQueryHandlerImp extends AbstractUpdateHandler implements
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(user);
+            return getErrorStateMessage(null);
         }
 
         return state.handlePreCheckoutQuery(user, preCheckoutQuery);

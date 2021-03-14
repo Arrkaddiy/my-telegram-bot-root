@@ -37,7 +37,7 @@ public class InlineQueryHandlerImp extends AbstractUpdateHandler implements Inli
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(user);
+            return getErrorStateMessage(null);
         }
 
         return state.handleInlineQuery(user, inlineQuery);

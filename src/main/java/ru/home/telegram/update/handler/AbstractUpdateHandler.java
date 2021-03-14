@@ -74,9 +74,9 @@ public abstract class AbstractUpdateHandler {
         return stateFacade.route(botStateType);
     }
 
-    protected SendMessage getErrorStateMessage(User user) {
+    protected SendMessage getErrorStateMessage(String chatId) {
         SendMessage errorMessage = new SendMessage();
-        errorMessage.setChatId(String.valueOf(user.getTelegramId()));
+        errorMessage.setChatId(chatId);
         errorMessage.setText("");
         return errorMessage;
     }

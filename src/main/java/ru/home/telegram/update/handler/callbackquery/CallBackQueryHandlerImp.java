@@ -37,7 +37,7 @@ public class CallBackQueryHandlerImp extends AbstractUpdateHandler implements Ca
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(user);
+            return getErrorStateMessage(null);
         }
 
         return state.handleCallBackQuery(user, callbackQuery);

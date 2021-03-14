@@ -43,7 +43,7 @@ public class MessageHandlerImp extends AbstractUpdateHandler implements MessageH
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(user);
+            return getErrorStateMessage(String.valueOf(message.getChatId()));
         }
 
         return state.handleMessage(user, message);

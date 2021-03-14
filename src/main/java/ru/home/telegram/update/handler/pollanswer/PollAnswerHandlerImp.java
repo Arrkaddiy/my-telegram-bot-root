@@ -37,7 +37,7 @@ public class PollAnswerHandlerImp extends AbstractUpdateHandler implements PollA
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(user);
+            return getErrorStateMessage(null);
         }
 
         return state.handlePollAnswer(user, pollAnswer);

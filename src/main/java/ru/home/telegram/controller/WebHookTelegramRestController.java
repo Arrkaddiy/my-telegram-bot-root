@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.generics.WebhookBot;
  * Rest-контроллера запросов от Telegram Bot через WebHook
  * <p>
  * Реализуем интерфейс нашего Rest-контроллера {@link TelegramRestController}
- * Анатация @RestController, говорит нам, что данный класс является Rest-контроллером
  */
 @RestController
 @RequiredArgsConstructor

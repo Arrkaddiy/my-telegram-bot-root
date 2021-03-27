@@ -3,7 +3,6 @@ package ru.home.telegram.update.facade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -23,7 +22,6 @@ import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 
 @Component
 @RequiredArgsConstructor
-@Qualifier(value = "updateFacade")
 public class UpdateFacadeImp implements UpdateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImp.class);
 

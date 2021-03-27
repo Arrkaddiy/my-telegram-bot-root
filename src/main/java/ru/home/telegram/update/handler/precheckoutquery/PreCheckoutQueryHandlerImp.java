@@ -2,7 +2,6 @@ package ru.home.telegram.update.handler.precheckoutquery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.payments.PreCheckoutQuery;
@@ -14,7 +13,6 @@ import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Component
-@Qualifier(value = "preCheckoutQueryHandler")
 public class PreCheckoutQueryHandlerImp extends AbstractUpdateHandler implements PreCheckoutQueryHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(PreCheckoutQueryHandlerImp.class);
 

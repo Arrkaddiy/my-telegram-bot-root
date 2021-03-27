@@ -1,7 +1,6 @@
 package ru.home.telegram.state.start;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -10,7 +9,6 @@ import ru.home.telegram.db.entity.User;
 
 @Component
 @RequiredArgsConstructor
-@Qualifier(value = "startState")
 public class StartStateImp implements StartState {
 
     @Override

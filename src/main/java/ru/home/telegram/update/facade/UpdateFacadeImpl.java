@@ -21,6 +21,12 @@ import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 @RequiredArgsConstructor
 public class UpdateFacadeImpl implements UpdateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImpl.class);
+    private static final String ROUTE_UPDATE = "Маршрутизация входящего запроса Update: {}";
+    private static final String ROUTE_UPDATE_ID = "Маршрутизация входящего запроса Update Id: {}";
+    private static final String ROUTE_UPDATE_CONTENT = "Определен контент входящего запроса UpdateContent: {}";
+    private static final String UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения! Update: {}";
+    private static final String ROUTE_UPDATE_CONTENT_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}";
+
 
     private final MessageHandler messageHandler;
     private final InlineQueryHandler inlineQueryHandler;
@@ -43,20 +49,20 @@ public class UpdateFacadeImpl implements UpdateFacade {
     @Override
     public BotApiMethod<?> route(Update update) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Маршрутизация входящего запроса Update: {}", update);
+            LOGGER.debug(ROUTE_UPDATE, update);
         } else {
-            LOGGER.info("Маршрутизация входящего запроса Update Id: {}", update.getUpdateId());
+            LOGGER.info(ROUTE_UPDATE_ID, update.getUpdateId());
         }
 
         UpdateContent updateContent = UpdateContent.getUpdateContent(update);
 
         if (UpdateContent.NULL_ERROR == updateContent) {
-            LOGGER.error("Ошибка определения контента входящего сообщения! Update: {}", update);
+            LOGGER.error(UPDATE_CONTENT_NULL_ERROR, update);
             return null;
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Определен контент входящего запроса UpdateContext: {}", updateContent);
+            LOGGER.debug(ROUTE_UPDATE_CONTENT, updateContent);
         }
 
         switch (updateContent) {
@@ -83,7 +89,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
             case POLL_ANSWER:
                 return pollAnswerHandler.handle(update.getPollAnswer());
             default:
-                LOGGER.error("Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}", updateContent);
+                LOGGER.error(ROUTE_UPDATE_CONTENT_ERROR, updateContent);
                 return null;
         }
     }

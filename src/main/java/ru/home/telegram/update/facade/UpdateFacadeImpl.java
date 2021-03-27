@@ -3,11 +3,10 @@ package ru.home.telegram.update.facade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.home.telegram.exception.BotRoutingException;
-import ru.home.telegram.update.constant.UpdateContext;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.callbackquery.CallBackQueryHandler;
 import ru.home.telegram.update.handler.channelpost.ChannelPostHandler;
 import ru.home.telegram.update.handler.choseninlinequery.ChosenInlineQueryHandler;
@@ -20,10 +19,9 @@ import ru.home.telegram.update.handler.pollanswer.PollAnswerHandler;
 import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryHandler;
 import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 
-@Component
 @RequiredArgsConstructor
-public class UpdateFacadeImp implements UpdateFacade {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImp.class);
+public class UpdateFacadeImpl implements UpdateFacade {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImpl.class);
 
     private final MessageHandler messageHandler;
     private final InlineQueryHandler inlineQueryHandler;
@@ -52,12 +50,12 @@ public class UpdateFacadeImp implements UpdateFacade {
         }
 
         try {
-            UpdateContext updateContext = UpdateContext.getUpdateContext(update);
+            UpdateContent updateContent = UpdateContent.getUpdateContent(update);
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Определен контекст входящего запроса UpdateContext: {}", updateContext);
+                LOGGER.debug("Определен контекст входящего запроса UpdateContext: {}", updateContent);
             }
 
-            switch (updateContext) {
+            switch (updateContent) {
                 case MESSAGE:
                     return messageHandler.handle(update.getMessage());
                 case INLINE_QUERY:
@@ -81,7 +79,7 @@ public class UpdateFacadeImp implements UpdateFacade {
                 case POLL_ANSWER:
                     return pollAnswerHandler.handle(update.getPollAnswer());
                 default:
-                    throw new BotRoutingException("Не найдена реализация обработки контекста: " + updateContext);
+                    throw new BotRoutingException("Не найдена реализация обработки контекста: " + updateContent);
             }
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации входящего запроса! Exception: {}", bre.getMessage(), bre);

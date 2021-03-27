@@ -2,7 +2,6 @@ package ru.home.telegram.update.handler.inlinequery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.InlineQuery;
 import ru.home.telegram.db.entity.User;
@@ -12,11 +11,10 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
-@Component
-public class InlineQueryHandlerImp extends AbstractUpdateHandler implements InlineQueryHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(InlineQueryHandlerImp.class);
+public class InlineQueryHandlerImpl extends AbstractUpdateHandler implements InlineQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InlineQueryHandlerImpl.class);
 
-    public InlineQueryHandlerImp(UserService userService, StateFacade stateFacade) {
+    public InlineQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
     }
 

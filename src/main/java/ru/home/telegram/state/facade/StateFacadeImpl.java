@@ -3,22 +3,20 @@ package ru.home.telegram.state.facade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.state.State;
 import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.start.StartState;
 
-@Component
 @RequiredArgsConstructor
-public class StateFacadeImp implements StateFacade {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StateFacadeImp.class);
+public class StateFacadeImpl implements StateFacade {
+    private static final Logger LOGGER = LoggerFactory.getLogger(StateFacadeImpl.class);
 
     private final StartState startState;
 
     @Override
     public State route(BotStateType stateType) {
-        LOGGER.info("");
+        LOGGER.info("Маршрутизация состояния StateType: {}", stateType);
 
         switch (stateType) {
             case START:

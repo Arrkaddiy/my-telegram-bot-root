@@ -1,8 +1,7 @@
-package ru.home.telegram.update.handler.message;
+package ru.home.telegram.update.handler.channelpost;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.db.entity.User;
@@ -12,26 +11,19 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
-@Component
-public class MessageHandlerImp extends AbstractUpdateHandler implements MessageHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageHandlerImp.class);
+public class ChannelPostHandlerImpl extends AbstractUpdateHandler implements ChannelPostHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelPostHandlerImpl.class);
 
-    public MessageHandlerImp(UserService userService, StateFacade stateFacade) {
+    public ChannelPostHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
     }
 
-    /**
-     * Обработка входящего запроса типа Message
-     *
-     * @param message - Входящий запрос типа {@link Message}
-     * @return Ответ пользователю
-     */
     @Override
     public BotApiMethod<?> handle(Message message) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события Message, объект Message: {}", message);
+            LOGGER.debug("Обработка события ChannelPost, объект Message: {}", message);
         } else {
-            LOGGER.info("Обработка события Message, объект Message Id: {}", message.getMessageId());
+            LOGGER.info("Обработка события ChannelPost, объект Message Id: {}", message.getMessageId());
         }
 
         State state;
@@ -41,9 +33,9 @@ public class MessageHandlerImp extends AbstractUpdateHandler implements MessageH
             state = getState(user);
         } catch (BotRoutingException bre) {
             LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(String.valueOf(message.getChatId()));
+            return getErrorStateMessage(null);
         }
 
-        return state.handleMessage(user, message);
+        return state.handleChannelPost(user, message);
     }
 }

@@ -1,10 +1,9 @@
-package ru.home.telegram.update.handler.channelpost;
+package ru.home.telegram.update.handler.callbackquery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.service.UserService;
@@ -12,24 +11,23 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
-@Component
-public class ChannelPostHandlerImp extends AbstractUpdateHandler implements ChannelPostHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelPostHandlerImp.class);
+public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements CallBackQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CallBackQueryHandlerImpl.class);
 
-    public ChannelPostHandlerImp(UserService userService, StateFacade stateFacade) {
+    public CallBackQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
     }
 
     @Override
-    public BotApiMethod<?> handle(Message message) {
+    public BotApiMethod<?> handle(CallbackQuery callbackQuery) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события ChannelPost, объект Message: {}", message);
+            LOGGER.debug("Обработка события CallbackQuery, объект CallbackQuery: {}", callbackQuery);
         } else {
-            LOGGER.info("Обработка события ChannelPost, объект Message Id: {}", message.getMessageId());
+            LOGGER.info("Обработка события CallbackQuery, объект CallbackQuery Id: {}", callbackQuery.getId());
         }
 
         State state;
-        User user = getUser(message.getFrom());
+        User user = getUser(callbackQuery.getFrom());
 
         try {
             state = getState(user);
@@ -38,6 +36,6 @@ public class ChannelPostHandlerImp extends AbstractUpdateHandler implements Chan
             return getErrorStateMessage(null);
         }
 
-        return state.handleChannelPost(user, message);
+        return state.handleCallBackQuery(user, callbackQuery);
     }
 }

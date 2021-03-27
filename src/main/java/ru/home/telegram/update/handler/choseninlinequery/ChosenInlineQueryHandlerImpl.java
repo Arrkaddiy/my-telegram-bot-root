@@ -2,7 +2,6 @@ package ru.home.telegram.update.handler.choseninlinequery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.ChosenInlineQuery;
 import ru.home.telegram.db.entity.User;
@@ -12,11 +11,10 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
-@Component
-public class ChosenInlineQueryHandlerImp extends AbstractUpdateHandler implements ChosenInlineQueryHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChosenInlineQueryHandlerImp.class);
+public class ChosenInlineQueryHandlerImpl extends AbstractUpdateHandler implements ChosenInlineQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChosenInlineQueryHandlerImpl.class);
 
-    public ChosenInlineQueryHandlerImp(UserService userService, StateFacade stateFacade) {
+    public ChosenInlineQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
     }
 

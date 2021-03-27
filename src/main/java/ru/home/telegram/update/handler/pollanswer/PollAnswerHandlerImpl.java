@@ -2,7 +2,6 @@ package ru.home.telegram.update.handler.pollanswer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.polls.PollAnswer;
 import ru.home.telegram.db.entity.User;
@@ -12,11 +11,10 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
-@Component
-public class PollAnswerHandlerImp extends AbstractUpdateHandler implements PollAnswerHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PollAnswerHandlerImp.class);
+public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements PollAnswerHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PollAnswerHandlerImpl.class);
 
-    public PollAnswerHandlerImp(UserService userService, StateFacade stateFacade) {
+    public PollAnswerHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
     }
 

@@ -2,13 +2,11 @@ package ru.home.telegram.update.handler.poll;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.polls.Poll;
 
-@Component
-public class PollHandlerImp implements PollHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PollHandlerImp.class);
+public class PollHandlerImpl implements PollHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PollHandlerImpl.class);
 
     @Override
     public BotApiMethod<?> handle(Poll poll) {

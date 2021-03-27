@@ -1,10 +1,9 @@
-package ru.home.telegram.update.handler.editedmessage;
+package ru.home.telegram.update.handler.shippingquery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.payments.ShippingQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.service.UserService;
@@ -12,24 +11,23 @@ import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
-@Component
-public class EditedMessageHandlerImp extends AbstractUpdateHandler implements EditedMessageHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EditedMessageHandlerImp.class);
+public class ShippingQueryHandlerImpl extends AbstractUpdateHandler implements ShippingQueryHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShippingQueryHandlerImpl.class);
 
-    public EditedMessageHandlerImp(UserService userService, StateFacade stateFacade) {
+    public ShippingQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
     }
 
     @Override
-    public BotApiMethod<?> handle(Message message) {
+    public BotApiMethod<?> handle(ShippingQuery shippingQuery) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события EditedMessage, объект Message: {}", message);
+            LOGGER.debug("Обработка события ShippingQuery, объект ShippingQuery: {}", shippingQuery);
         } else {
-            LOGGER.info("Обработка события EditedMessage, объект Message Id: {}", message.getMessageId());
+            LOGGER.info("Обработка события ShippingQuery, объект ShippingQuery Id: {}", shippingQuery.getId());
         }
 
         State state;
-        User user = getUser(message.getFrom());
+        User user = getUser(shippingQuery.getFrom());
 
         try {
             state = getState(user);
@@ -38,6 +36,6 @@ public class EditedMessageHandlerImp extends AbstractUpdateHandler implements Ed
             return getErrorStateMessage(null);
         }
 
-        return state.handleEditedMessage(user, message);
+        return state.handleShippingQuery(user, shippingQuery);
     }
 }

@@ -10,12 +10,13 @@ import ru.home.telegram.state.start.StartState;
 @RequiredArgsConstructor
 public class StateFacadeImpl implements StateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(StateFacadeImpl.class);
+    private static final String STATE_FACADE_ROUTE = "Маршрутизация состояния StateType: {}";
 
     private final StartState startState;
 
     @Override
     public State route(BotStateType stateType) {
-        LOGGER.info("Маршрутизация состояния StateType: {}", stateType);
+        LOGGER.info(STATE_FACADE_ROUTE, stateType);
 
         switch (stateType) {
             case START:

@@ -3,6 +3,9 @@ package ru.home.telegram.config;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 
+/**
+ * ServiceConfiguration.
+ */
 @Getter
 public class ServiceConfiguration {
     /**

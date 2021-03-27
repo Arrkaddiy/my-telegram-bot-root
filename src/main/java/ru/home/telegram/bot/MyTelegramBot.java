@@ -10,7 +10,7 @@ import ru.home.telegram.config.ServiceConfiguration;
 import ru.home.telegram.update.facade.UpdateFacade;
 
 /**
- * Telegram Bot
+ * Telegram Bot.
  */
 @RequiredArgsConstructor
 public class MyTelegramBot extends TelegramWebhookBot {

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.polls.PollAnswer;
 import ru.home.telegram.db.entity.User;
-import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
@@ -26,15 +25,8 @@ public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements Poll
             LOGGER.info("Обработка события PollAnswer, объект PollAnswer pollId: {}", pollAnswer.getPollId());
         }
 
-        State state;
         User user = getUser(pollAnswer.getUser());
-
-        try {
-            state = getState(user);
-        } catch (BotRoutingException bre) {
-            LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(null);
-        }
+        State state = getState(user);
 
         return state.handlePollAnswer(user, pollAnswer);
     }

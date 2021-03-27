@@ -15,6 +15,10 @@ import ru.home.telegram.update.facade.UpdateFacade;
 @RequiredArgsConstructor
 public class MyTelegramBot extends TelegramWebhookBot {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTelegramBot.class);
+    private static final String INPUT_UPDATE = "Получен входящий запрос Update: {}";
+    private static final String INPUT_UPDATE_ID = "Получен входящий запрос Update Id: {}";
+    private static final String INPUT_UPDATE_NULL = "Входящий запрос Update не может быть NULL!";
+    private static final String UPDATE_EXCEPTION = "В ходе обработки запроса возникла ошибка! Exception: {}";
 
     private final UpdateFacade updateFacade;
     private final ServiceConfiguration serviceConfiguration;
@@ -29,19 +33,19 @@ public class MyTelegramBot extends TelegramWebhookBot {
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (update != null) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Получен входящий запрос Update: {}", update);
+                LOGGER.debug(INPUT_UPDATE, update);
             } else {
-                LOGGER.info("Получен входящий запрос Update Id: {}", update.getUpdateId());
+                LOGGER.info(INPUT_UPDATE_ID, update.getUpdateId());
             }
 
             try {
                 return updateFacade.route(update);
             } catch (Exception e) {
-                LOGGER.error("В ходе обработки запроса возникла ошибка! Exception: {}", e.getMessage(), e);
+                LOGGER.error(UPDATE_EXCEPTION, e.getMessage(), e);
                 return null;
             }
         } else {
-            LOGGER.error("Входящий запрос Update не может быть null!");
+            LOGGER.error(INPUT_UPDATE_NULL);
             return null;
         }
     }

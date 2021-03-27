@@ -18,6 +18,6 @@ public enum BotCommand {
         return Arrays.stream(values())
                 .filter(botCommand -> botCommand.getCommand().equals(messageEntity.getText()))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElse(null);
     }
 }

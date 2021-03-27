@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.callbackquery.CallBackQueryHandler;
 import ru.home.telegram.update.handler.channelpost.ChannelPostHandler;
@@ -49,41 +48,43 @@ public class UpdateFacadeImpl implements UpdateFacade {
             LOGGER.info("Маршрутизация входящего запроса Update Id: {}", update.getUpdateId());
         }
 
-        try {
-            UpdateContent updateContent = UpdateContent.getUpdateContent(update);
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Определен контекст входящего запроса UpdateContext: {}", updateContent);
-            }
+        UpdateContent updateContent = UpdateContent.getUpdateContent(update);
 
-            switch (updateContent) {
-                case MESSAGE:
-                    return messageHandler.handle(update.getMessage());
-                case INLINE_QUERY:
-                    return inlineQueryHandler.handle(update.getInlineQuery());
-                case CHOSEN_INLINE_QUERY:
-                    return chosenInlineQueryHandler.handle(update.getChosenInlineQuery());
-                case CALL_BACK_QUERY:
-                    return callBackQueryHandler.handle(update.getCallbackQuery());
-                case EDITED_MESSAGE:
-                    return editedMessageHandler.handle(update.getEditedMessage());
-                case CHANNEL_POST:
-                    return channelPostHandler.handle(update.getChannelPost());
-                case EDITED_CHANNEL_POST:
-                    return editedChannelPostHandler.handle(update.getEditedChannelPost());
-                case SHIPPING_QUERY:
-                    return shippingQueryHandler.handle(update.getShippingQuery());
-                case PRE_CHECKOUT_QUERY:
-                    return preCheckoutQueryHandler.handle(update.getPreCheckoutQuery());
-                case POLL:
-                    return pollHandler.handle(update.getPoll());
-                case POLL_ANSWER:
-                    return pollAnswerHandler.handle(update.getPollAnswer());
-                default:
-                    throw new BotRoutingException("Не найдена реализация обработки контекста: " + updateContent);
-            }
-        } catch (BotRoutingException bre) {
-            LOGGER.error("Ошибка маршрутизации входящего запроса! Exception: {}", bre.getMessage(), bre);
+        if (UpdateContent.NULL_ERROR == updateContent) {
+            LOGGER.error("Ошибка определения контента входящего сообщения! Update: {}", update);
             return null;
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Определен контент входящего запроса UpdateContext: {}", updateContent);
+        }
+
+        switch (updateContent) {
+            case MESSAGE:
+                return messageHandler.handle(update.getMessage());
+            case INLINE_QUERY:
+                return inlineQueryHandler.handle(update.getInlineQuery());
+            case CHOSEN_INLINE_QUERY:
+                return chosenInlineQueryHandler.handle(update.getChosenInlineQuery());
+            case CALL_BACK_QUERY:
+                return callBackQueryHandler.handle(update.getCallbackQuery());
+            case EDITED_MESSAGE:
+                return editedMessageHandler.handle(update.getEditedMessage());
+            case CHANNEL_POST:
+                return channelPostHandler.handle(update.getChannelPost());
+            case EDITED_CHANNEL_POST:
+                return editedChannelPostHandler.handle(update.getEditedChannelPost());
+            case SHIPPING_QUERY:
+                return shippingQueryHandler.handle(update.getShippingQuery());
+            case PRE_CHECKOUT_QUERY:
+                return preCheckoutQueryHandler.handle(update.getPreCheckoutQuery());
+            case POLL:
+                return pollHandler.handle(update.getPoll());
+            case POLL_ANSWER:
+                return pollAnswerHandler.handle(update.getPollAnswer());
+            default:
+                LOGGER.error("Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}", updateContent);
+                return null;
         }
     }
 }

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.home.telegram.db.entity.User;
-import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
@@ -20,21 +19,19 @@ public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements C
 
     @Override
     public BotApiMethod<?> handle(CallbackQuery callbackQuery) {
+        if (callbackQuery == null) {
+            LOGGER.error("Ошибка обработки объекта CallbackQuery! CallbackQuery не может быть NULL!");
+            return null;
+        }
+
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Обработка события CallbackQuery, объект CallbackQuery: {}", callbackQuery);
         } else {
             LOGGER.info("Обработка события CallbackQuery, объект CallbackQuery Id: {}", callbackQuery.getId());
         }
 
-        State state;
         User user = getUser(callbackQuery.getFrom());
-
-        try {
-            state = getState(user);
-        } catch (BotRoutingException bre) {
-            LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(null);
-        }
+        State state = getState(user);
 
         return state.handleCallBackQuery(user, callbackQuery);
     }

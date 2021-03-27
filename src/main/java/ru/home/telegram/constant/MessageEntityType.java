@@ -32,6 +32,6 @@ public enum MessageEntityType {
         return Arrays.stream(values())
                 .filter(messageEntityType -> messageEntityType.getType().equalsIgnoreCase(messageEntity.getType()))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElse(null);
     }
 }

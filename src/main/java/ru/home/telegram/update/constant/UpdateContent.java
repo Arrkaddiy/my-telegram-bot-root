@@ -1,7 +1,6 @@
 package ru.home.telegram.update.constant;
 
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.home.telegram.exception.BotRoutingException;
 
 public enum UpdateContent {
     MESSAGE,
@@ -14,7 +13,8 @@ public enum UpdateContent {
     SHIPPING_QUERY,
     PRE_CHECKOUT_QUERY,
     POLL,
-    POLL_ANSWER;
+    POLL_ANSWER,
+    NULL_ERROR;
 
     public static UpdateContent getUpdateContent(Update update) {
         if (update.hasMessage()) {
@@ -40,7 +40,7 @@ public enum UpdateContent {
         } else if (update.hasPollAnswer()) {
             return UpdateContent.POLL_ANSWER;
         } else {
-            throw new BotRoutingException("Ошибка определения контекста запроса! Тип контекста не найден!");
+            return UpdateContent.NULL_ERROR;
         }
     }
 }

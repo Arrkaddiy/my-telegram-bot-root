@@ -60,7 +60,7 @@ public enum MessageContext {
         } else if (message.hasVoice()) {
             return MessageContext.VOICE;
         } else {
-            throw new IllegalStateException("Ошибка определения события! Тип события не найден!");
+            return null;
         }
     }
 }

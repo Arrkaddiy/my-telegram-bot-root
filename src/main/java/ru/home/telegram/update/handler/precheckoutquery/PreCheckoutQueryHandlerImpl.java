@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.payments.PreCheckoutQuery;
 import ru.home.telegram.db.entity.User;
-import ru.home.telegram.exception.BotRoutingException;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.State;
 import ru.home.telegram.state.facade.StateFacade;
@@ -26,15 +25,8 @@ public class PreCheckoutQueryHandlerImpl extends AbstractUpdateHandler implement
             LOGGER.info("Обработка события PreCheckoutQuery, объект PreCheckoutQuery Id: {}", preCheckoutQuery.getId());
         }
 
-        State state;
         User user = getUser(preCheckoutQuery.getFrom());
-
-        try {
-            state = getState(user);
-        } catch (BotRoutingException bre) {
-            LOGGER.error("Ошибка маршрутизации текущей стадии! Exception: {}", bre.getMessage(), bre);
-            return getErrorStateMessage(null);
-        }
+        State state = getState(user);
 
         return state.handlePreCheckoutQuery(user, preCheckoutQuery);
     }

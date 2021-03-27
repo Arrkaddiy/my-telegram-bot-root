@@ -3,7 +3,6 @@ package ru.home.telegram.update.handler;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.State;
@@ -72,12 +71,5 @@ public abstract class AbstractUpdateHandler {
             LOGGER.debug("Получено значение текущей стадии пользователя State: {}", botStateType);
         }
         return stateFacade.route(botStateType);
-    }
-
-    protected SendMessage getErrorStateMessage(String chatId) {
-        SendMessage errorMessage = new SendMessage();
-        errorMessage.setChatId(chatId);
-        errorMessage.setText("");
-        return errorMessage;
     }
 }

@@ -17,8 +17,8 @@ public class MyTelegramBot extends TelegramWebhookBot {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyTelegramBot.class);
     private static final String INPUT_UPDATE = "Получен входящий запрос Update: {}";
     private static final String INPUT_UPDATE_ID = "Получен входящий запрос Update Id: {}";
-    private static final String INPUT_UPDATE_NULL = "Входящий запрос Update не может быть NULL!";
-    private static final String UPDATE_EXCEPTION = "В ходе обработки запроса возникла ошибка! Exception: {}";
+    private static final String INPUT_UPDATE_NULL = "Получен входящий запрос Update равным NULL!";
+    private static final String UPDATE_EXCEPTION = "В ходе обработки запроса возникла непредвиденная ошибка! Exception: {}";
 
     private final UpdateFacade updateFacade;
     private final ServiceConfiguration serviceConfiguration;

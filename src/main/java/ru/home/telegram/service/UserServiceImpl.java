@@ -23,17 +23,14 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(User user) {
-        if (user != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Сохранение пользователя User: {}", user);
-            } else {
-                LOGGER.info("Сохранение пользователя User Id {}", user.getId());
-            }
-            user.setUpdatable(LocalDateTime.now());
-            userRepository.save(user);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Сохранение пользователя User: {}", user);
         } else {
-            throw new IllegalArgumentException("Объект сохранения не может быть null!");
+            LOGGER.info("Сохранение пользователя User Id {}", user.getId());
         }
+
+        user.setUpdatable(LocalDateTime.now());
+        userRepository.save(user);
     }
 
     /**
@@ -43,17 +40,13 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(User user) {
-        if (user != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Удаление пользователя User: {}", user);
-            } else {
-                LOGGER.info("Удаление пользователя User Id: {}", user.getId());
-            }
-
-            userRepository.delete(user);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Удаление пользователя User: {}", user);
         } else {
-            throw new IllegalArgumentException("Объект удаления не может быть null!");
+            LOGGER.info("Удаление пользователя User Id: {}", user.getId());
         }
+
+        userRepository.delete(user);
     }
 
     /**
@@ -63,7 +56,7 @@ public class UserServiceImpl implements UserService {
      * @return Объект {@link User}
      */
     public User getUserById(Long id) {
-        LOGGER.info("Поиск пользователя по ID: {}", id);
+        LOGGER.info("Поиск пользователя по Id: {}", id);
         return userRepository.findById(id).orElse(null);
     }
 
@@ -74,7 +67,7 @@ public class UserServiceImpl implements UserService {
      * @return Объект {@link User}
      */
     public User getUserByTelegramId(Integer id) {
-        LOGGER.info("Поиск пользователя по Telegram ID: {}", id);
+        LOGGER.info("Поиск пользователя по Telegram Id: {}", id);
         return userRepository.findByTelegramId(id).orElse(null);
     }
 }

@@ -29,9 +29,11 @@ import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryHandlerI
 import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandlerImpl;
 
+/**
+ * UpdateContext.
+ */
 @Configuration
 public class UpdateContext {
-
     /**
      * Бин обработки контента CallBackQuery входящего запроса
      *
@@ -43,7 +45,6 @@ public class UpdateContext {
     public CallBackQueryHandler callBackQueryHandler(UserService userService, StateFacade stateFacade) {
         return new CallBackQueryHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента ChannelPost входящего запроса
      *
@@ -55,7 +56,6 @@ public class UpdateContext {
     public ChannelPostHandler channelPostHandler(UserService userService, StateFacade stateFacade) {
         return new ChannelPostHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента ChosenInlineQuery входящего запроса
      *
@@ -67,7 +67,6 @@ public class UpdateContext {
     public ChosenInlineQueryHandler chosenInlineQueryHandler(UserService userService, StateFacade stateFacade) {
         return new ChosenInlineQueryHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента EditedChannelPost входящего запроса
      *
@@ -79,7 +78,6 @@ public class UpdateContext {
     public EditedChannelPostHandler editedChannelPostHandler(UserService userService, StateFacade stateFacade) {
         return new EditedChannelPostHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента EditedMessage входящего запроса
      *
@@ -91,7 +89,6 @@ public class UpdateContext {
     public EditedMessageHandler editedMessageHandler(UserService userService, StateFacade stateFacade) {
         return new EditedMessageHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента InlineQuery входящего запроса
      *
@@ -103,7 +100,6 @@ public class UpdateContext {
     public InlineQueryHandler inlineQueryHandler(UserService userService, StateFacade stateFacade) {
         return new InlineQueryHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента Message входящего запроса
      *
@@ -115,7 +111,6 @@ public class UpdateContext {
     public MessageHandler messageHandler(UserService userService, StateFacade stateFacade) {
         return new MessageHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента Poll входящего запроса
      *
@@ -125,7 +120,6 @@ public class UpdateContext {
     public PollHandler pollHandler() {
         return new PollHandlerImpl();
     }
-
     /**
      * Бин обработки контента PollAnswer входящего запроса
      *
@@ -137,7 +131,6 @@ public class UpdateContext {
     public PollAnswerHandler pollAnswerHandler(UserService userService, StateFacade stateFacade) {
         return new PollAnswerHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента PreCheckoutQuery входящего запроса
      *
@@ -149,7 +142,6 @@ public class UpdateContext {
     public PreCheckoutQueryHandler preCheckoutQueryHandler(UserService userService, StateFacade stateFacade) {
         return new PreCheckoutQueryHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин обработки контента ShippingQuery входящего запроса
      *
@@ -161,7 +153,6 @@ public class UpdateContext {
     public ShippingQueryHandler shippingQueryHandler(UserService userService, StateFacade stateFacade) {
         return new ShippingQueryHandlerImpl(userService, stateFacade);
     }
-
     /**
      * Бин маршрутизации контента входящего запроса
      *

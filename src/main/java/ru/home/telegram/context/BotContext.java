@@ -7,11 +7,13 @@ import ru.home.telegram.bot.MyTelegramBot;
 import ru.home.telegram.config.ServiceConfiguration;
 import ru.home.telegram.update.facade.UpdateFacade;
 
+/**
+ * BotContext.
+ */
 @Configuration
 public class BotContext {
-
     /**
-     * Бин телеграм бота
+     * Бин телеграмм бота
      *
      * @param updateFacade         Бин маршрутизации входящего запроса
      * @param serviceConfiguration Бин конфигурации приложения

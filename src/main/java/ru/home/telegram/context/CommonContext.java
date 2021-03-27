@@ -7,9 +7,11 @@ import ru.home.telegram.db.repository.UserRepository;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.service.UserServiceImpl;
 
+/**
+ * CommonContext.
+ */
 @Configuration
 public class CommonContext {
-
     /**
      * Бин конфигурации приложения
      *
@@ -19,7 +21,6 @@ public class CommonContext {
     public ServiceConfiguration serviceConfiguration() {
         return new ServiceConfiguration();
     }
-
     /**
      * Бин серивиса для Entity User {@link ru.home.telegram.db.entity.User}
      *

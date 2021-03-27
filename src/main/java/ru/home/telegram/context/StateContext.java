@@ -7,9 +7,11 @@ import ru.home.telegram.state.facade.StateFacadeImpl;
 import ru.home.telegram.state.start.StartState;
 import ru.home.telegram.state.start.StartStateImpl;
 
+/**
+ * StateContext.
+ */
 @Configuration
 public class StateContext {
-
     /**
      * Бин состояния START
      *
@@ -19,7 +21,6 @@ public class StateContext {
     public StartState startState() {
         return new StartStateImpl();
     }
-
     /**
      * Бин маршрутизации состояния пользователя
      *

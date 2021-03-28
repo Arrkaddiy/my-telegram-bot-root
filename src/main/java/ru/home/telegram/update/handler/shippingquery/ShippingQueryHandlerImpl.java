@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.payments.ShippingQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.State;
+import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
@@ -28,8 +28,8 @@ public class ShippingQueryHandlerImpl extends AbstractUpdateHandler implements S
         }
 
         User user = getUser(shippingQuery.getFrom());
-        State state = getState(user);
+        BotStateType currentState = user.getCurrentState();
 
-        return state.handleShippingQuery(user, shippingQuery);
+        return stateFacade.handleShippingQuery(currentState, user, shippingQuery);
     }
 }

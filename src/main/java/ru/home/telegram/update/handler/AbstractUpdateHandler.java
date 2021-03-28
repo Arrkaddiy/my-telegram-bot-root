@@ -5,8 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.State;
-import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
 
 @RequiredArgsConstructor
@@ -14,7 +12,7 @@ public abstract class AbstractUpdateHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractUpdateHandler.class);
 
     private final UserService userService;
-    private final StateFacade stateFacade;
+    protected final StateFacade stateFacade;
 
     protected User getUser(org.telegram.telegrambots.meta.api.objects.User telegramUser) {
         Integer telegramUserId = telegramUser.getId();
@@ -58,18 +56,5 @@ public abstract class AbstractUpdateHandler {
             LOGGER.info("Получен пользователь User Id: {}", user.getId());
         }
         return user;
-    }
-
-    protected State getState(User user) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Получение текущей стадии пользователя User: {}", user);
-        } else {
-            LOGGER.info("Получение текущей стадии пользователя Telegram Id: {}", user.getTelegramId());
-        }
-        BotStateType botStateType = user.getCurrentState();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Получено значение текущей стадии пользователя State: {}", botStateType);
-        }
-        return stateFacade.route(botStateType);
     }
 }

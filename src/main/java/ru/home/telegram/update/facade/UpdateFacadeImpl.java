@@ -25,8 +25,8 @@ public class UpdateFacadeImpl implements UpdateFacade {
     private static final String ROUTE_UPDATE = "Маршрутизация входящего запроса Update: {}";
     private static final String ROUTE_UPDATE_ID = "Маршрутизация входящего запроса Update Id: {}";
     private static final String ROUTE_UPDATE_CONTENT = "Определен контент входящего запроса UpdateContent: {}";
-    private static final String UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения! Update: {}";
-    private static final String ROUTE_UPDATE_CONTENT_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}";
+    private static final String ROUTE_UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения! Update: {}";
+    private static final String ROUTE_UPDATE_CONTENT_HANDLER_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}";
 
     private final ApplicationContext context;
 
@@ -46,8 +46,8 @@ public class UpdateFacadeImpl implements UpdateFacade {
 
         UpdateContent updateContent = UpdateContent.getUpdateContent(update);
 
-        if (UpdateContent.NULL_ERROR == updateContent) {
-            LOGGER.error(UPDATE_CONTENT_NULL_ERROR, update);
+        if (UpdateContent.NULL == updateContent) {
+            LOGGER.error(ROUTE_UPDATE_CONTENT_NULL_ERROR, update);
             return null;
         }
 
@@ -79,7 +79,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
             case POLL_ANSWER:
                 return context.getBean(PollAnswerHandler.class).handle(update.getPollAnswer());
             default:
-                LOGGER.error(ROUTE_UPDATE_CONTENT_ERROR, updateContent);
+                LOGGER.error(ROUTE_UPDATE_CONTENT_HANDLER_ERROR, updateContent);
                 return null;
         }
     }

@@ -1,5 +1,6 @@
 package ru.home.telegram.context;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.home.telegram.state.facade.StateFacade;
@@ -24,11 +25,11 @@ public class StateContext {
     /**
      * Бин маршрутизации состояния пользователя
      *
-     * @param startState Бин состояния START
+     * @param context Бин контекста
      * @return {@link StateFacadeImpl}
      */
     @Bean
-    public StateFacade stateFacade(StartState startState) {
-        return new StateFacadeImpl(startState);
+    public StateFacade stateFacade(ApplicationContext context) {
+        return new StateFacadeImpl(context);
     }
 }

@@ -1,5 +1,7 @@
 package ru.home.telegram.context;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.home.telegram.config.ServiceConfiguration;
@@ -30,5 +32,14 @@ public class CommonContext {
     @Bean
     public UserService userService(UserRepository userRepository) {
         return new UserServiceImpl(userRepository);
+    }
+    /**
+     * Бин контекста
+     *
+     * @return AnnotationConfigApplicationContext
+     */
+    @Bean
+    public ApplicationContext context() {
+        return new AnnotationConfigApplicationContext();
     }
 }

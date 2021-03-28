@@ -3,6 +3,7 @@ package ru.home.telegram.update.facade;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.home.telegram.update.constant.UpdateContent;
@@ -27,18 +28,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
     private static final String UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения! Update: {}";
     private static final String ROUTE_UPDATE_CONTENT_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}";
 
-
-    private final MessageHandler messageHandler;
-    private final InlineQueryHandler inlineQueryHandler;
-    private final ChosenInlineQueryHandler chosenInlineQueryHandler;
-    private final CallBackQueryHandler callBackQueryHandler;
-    private final EditedMessageHandler editedMessageHandler;
-    private final ChannelPostHandler channelPostHandler;
-    private final EditedChannelPostHandler editedChannelPostHandler;
-    private final ShippingQueryHandler shippingQueryHandler;
-    private final PreCheckoutQueryHandler preCheckoutQueryHandler;
-    private final PollHandler pollHandler;
-    private final PollAnswerHandler pollAnswerHandler;
+    private final ApplicationContext context;
 
     /**
      * Маршрутизация входящего запроса
@@ -67,27 +57,27 @@ public class UpdateFacadeImpl implements UpdateFacade {
 
         switch (updateContent) {
             case MESSAGE:
-                return messageHandler.handle(update.getMessage());
+                return context.getBean(MessageHandler.class).handle(update.getMessage());
             case INLINE_QUERY:
-                return inlineQueryHandler.handle(update.getInlineQuery());
+                return context.getBean(InlineQueryHandler.class).handle(update.getInlineQuery());
             case CHOSEN_INLINE_QUERY:
-                return chosenInlineQueryHandler.handle(update.getChosenInlineQuery());
+                return context.getBean(ChosenInlineQueryHandler.class).handle(update.getChosenInlineQuery());
             case CALL_BACK_QUERY:
-                return callBackQueryHandler.handle(update.getCallbackQuery());
+                return context.getBean(CallBackQueryHandler.class).handle(update.getCallbackQuery());
             case EDITED_MESSAGE:
-                return editedMessageHandler.handle(update.getEditedMessage());
+                return context.getBean(EditedMessageHandler.class).handle(update.getEditedMessage());
             case CHANNEL_POST:
-                return channelPostHandler.handle(update.getChannelPost());
+                return context.getBean(ChannelPostHandler.class).handle(update.getChannelPost());
             case EDITED_CHANNEL_POST:
-                return editedChannelPostHandler.handle(update.getEditedChannelPost());
+                return context.getBean(EditedChannelPostHandler.class).handle(update.getEditedChannelPost());
             case SHIPPING_QUERY:
-                return shippingQueryHandler.handle(update.getShippingQuery());
+                return context.getBean(ShippingQueryHandler.class).handle(update.getShippingQuery());
             case PRE_CHECKOUT_QUERY:
-                return preCheckoutQueryHandler.handle(update.getPreCheckoutQuery());
+                return context.getBean(PreCheckoutQueryHandler.class).handle(update.getPreCheckoutQuery());
             case POLL:
-                return pollHandler.handle(update.getPoll());
+                return context.getBean(PollHandler.class).handle(update.getPoll());
             case POLL_ANSWER:
-                return pollAnswerHandler.handle(update.getPollAnswer());
+                return context.getBean(PollAnswerHandler.class).handle(update.getPollAnswer());
             default:
                 LOGGER.error(ROUTE_UPDATE_CONTENT_ERROR, updateContent);
                 return null;

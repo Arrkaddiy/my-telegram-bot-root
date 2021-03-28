@@ -12,6 +12,8 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements PollAnswerHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(PollAnswerHandlerImpl.class);
+    private static final String HANDLE_POLL_ANSWER = "Обработка события PollAnswer, объект PollAnswer: {}";
+    private static final String HANDLE_POLL_ANSWER_ID = "Обработка события PollAnswer, объект PollAnswer pollId: {}";
 
     public PollAnswerHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -20,9 +22,9 @@ public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements Poll
     @Override
     public BotApiMethod<?> handle(PollAnswer pollAnswer) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события PollAnswer, объект PollAnswer: {}", pollAnswer);
+            LOGGER.debug(HANDLE_POLL_ANSWER, pollAnswer);
         } else {
-            LOGGER.info("Обработка события PollAnswer, объект PollAnswer pollId: {}", pollAnswer.getPollId());
+            LOGGER.info(HANDLE_POLL_ANSWER_ID, pollAnswer.getPollId());
         }
 
         User user = getUser(pollAnswer.getUser());

@@ -12,6 +12,8 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 public class EditedChannelPostHandlerImpl extends AbstractUpdateHandler implements EditedChannelPostHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(EditedChannelPostHandlerImpl.class);
+    private static final String HANDLE_EDITED_CHANNEL_POST = "Обработка события EditedChannelPost, объект Message: {}";
+    private static final String HANDLE_EDITED_CHANNEL_POST_ID = "Обработка события EditedChannelPost, объект Message Id: {}";
 
     public EditedChannelPostHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -20,9 +22,9 @@ public class EditedChannelPostHandlerImpl extends AbstractUpdateHandler implemen
     @Override
     public BotApiMethod<?> handle(Message message) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события EditedChannelPost, объект Message: {}", message);
+            LOGGER.debug(HANDLE_EDITED_CHANNEL_POST, message);
         } else {
-            LOGGER.info("Обработка события EditedChannelPost, объект Message Id: {}", message.getMessageId());
+            LOGGER.info(HANDLE_EDITED_CHANNEL_POST_ID, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

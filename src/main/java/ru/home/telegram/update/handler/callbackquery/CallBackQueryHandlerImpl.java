@@ -12,6 +12,8 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements CallBackQueryHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(CallBackQueryHandlerImpl.class);
+    private static final String HANDLE_CALL_BACK_QUERY = "Обработка события CallbackQuery, объект CallbackQuery: {}";
+    private static final String HANDLE_CALL_BACK_QUERY_ID = "Обработка события CallbackQuery, объект CallbackQuery Id: {}";
 
     public CallBackQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -19,15 +21,10 @@ public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements C
 
     @Override
     public BotApiMethod<?> handle(CallbackQuery callbackQuery) {
-        if (callbackQuery == null) {
-            LOGGER.error("Ошибка обработки объекта CallbackQuery! CallbackQuery не может быть NULL!");
-            return null;
-        }
-
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события CallbackQuery, объект CallbackQuery: {}", callbackQuery);
+            LOGGER.debug(HANDLE_CALL_BACK_QUERY, callbackQuery);
         } else {
-            LOGGER.info("Обработка события CallbackQuery, объект CallbackQuery Id: {}", callbackQuery.getId());
+            LOGGER.info(HANDLE_CALL_BACK_QUERY_ID, callbackQuery.getId());
         }
 
         User user = getUser(callbackQuery.getFrom());

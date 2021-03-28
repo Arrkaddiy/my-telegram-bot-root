@@ -12,6 +12,8 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 public class ChosenInlineQueryHandlerImpl extends AbstractUpdateHandler implements ChosenInlineQueryHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChosenInlineQueryHandlerImpl.class);
+    private static final String HANDLE_CHOSEN_INLINE_QUERY = "Обработка события ChosenInlineQuery, объект ChosenInlineQuery: {}";
+    private static final String HANDLE_CHOSEN_INLINE_QUERY_ID = "Обработка события ChosenInlineQuery, объект ChosenInlineQuery ResultId: {}";
 
     public ChosenInlineQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -20,9 +22,9 @@ public class ChosenInlineQueryHandlerImpl extends AbstractUpdateHandler implemen
     @Override
     public BotApiMethod<?> handle(ChosenInlineQuery chosenInlineQuery) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события ChosenInlineQuery, объект ChosenInlineQuery: {}", chosenInlineQuery);
+            LOGGER.debug(HANDLE_CHOSEN_INLINE_QUERY, chosenInlineQuery);
         } else {
-            LOGGER.info("Обработка события ChosenInlineQuery, объект ChosenInlineQuery ResultId: {}", chosenInlineQuery.getResultId());
+            LOGGER.info(HANDLE_CHOSEN_INLINE_QUERY_ID, chosenInlineQuery.getResultId());
         }
 
         User user = getUser(chosenInlineQuery.getFrom());

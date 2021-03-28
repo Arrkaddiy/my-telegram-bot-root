@@ -19,9 +19,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * Объект хранения данных в БД
- * <p>
- * В нем описывается структура таблицы, колонки и тд
+ * Объект хранения данных пользователя в БД
  */
 @Entity
 @Getter

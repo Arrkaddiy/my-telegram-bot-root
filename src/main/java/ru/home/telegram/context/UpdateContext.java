@@ -1,5 +1,6 @@
 package ru.home.telegram.context;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.home.telegram.service.UserService;
@@ -156,42 +157,11 @@ public class UpdateContext {
     /**
      * Бин маршрутизации контента входящего запроса
      *
-     * @param messageHandler           Бин обработки контента Message входящего запроса
-     * @param inlineQueryHandler       Бин обработки контента InlineQuery входящего запроса
-     * @param chosenInlineQueryHandler Бин обработки контента ChosenInlineQuery входящего запроса
-     * @param callBackQueryHandler     Бин обработки контента CallBackQuery входящего запроса
-     * @param editedMessageHandler     Бин обработки контента EditedMessage входящего запроса
-     * @param channelPostHandler       Бин обработки контента ChannelPost входящего запроса
-     * @param editedChannelPostHandler Бин обработки контента EditedChannelPost входящего запроса
-     * @param shippingQueryHandler     Бин обработки контента ShippingQuery входящего запроса
-     * @param preCheckoutQueryHandler  Бин обработки контента PreCheckoutQuery входящего запроса
-     * @param pollHandler              Бин обработки контента Poll входящего запроса
-     * @param pollAnswerHandler        Бин обработки контента PollAnswer входящего запроса
+     * @param context Бин контекста
      * @return {@link UpdateFacadeImpl}
      */
     @Bean
-    public UpdateFacade updateFacade(MessageHandler messageHandler,
-                                     InlineQueryHandler inlineQueryHandler,
-                                     ChosenInlineQueryHandler chosenInlineQueryHandler,
-                                     CallBackQueryHandler callBackQueryHandler,
-                                     EditedMessageHandler editedMessageHandler,
-                                     ChannelPostHandler channelPostHandler,
-                                     EditedChannelPostHandler editedChannelPostHandler,
-                                     ShippingQueryHandler shippingQueryHandler,
-                                     PreCheckoutQueryHandler preCheckoutQueryHandler,
-                                     PollHandler pollHandler,
-                                     PollAnswerHandler pollAnswerHandler) {
-        return new UpdateFacadeImpl(
-                messageHandler,
-                inlineQueryHandler,
-                chosenInlineQueryHandler,
-                callBackQueryHandler,
-                editedMessageHandler,
-                channelPostHandler,
-                editedChannelPostHandler,
-                shippingQueryHandler,
-                preCheckoutQueryHandler,
-                pollHandler,
-                pollAnswerHandler);
+    public UpdateFacade updateFacade(ApplicationContext context) {
+        return new UpdateFacadeImpl(context);
     }
 }

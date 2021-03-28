@@ -12,6 +12,8 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 public class ShippingQueryHandlerImpl extends AbstractUpdateHandler implements ShippingQueryHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShippingQueryHandlerImpl.class);
+    private static final String HANDLE_SHIPPING_QUERY = "Обработка события ShippingQuery, объект ShippingQuery: {}";
+    private static final String HANDLE_SHIPPING_QUERY_ID = "Обработка события ShippingQuery, объект ShippingQuery Id: {}";
 
     public ShippingQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -20,9 +22,9 @@ public class ShippingQueryHandlerImpl extends AbstractUpdateHandler implements S
     @Override
     public BotApiMethod<?> handle(ShippingQuery shippingQuery) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события ShippingQuery, объект ShippingQuery: {}", shippingQuery);
+            LOGGER.debug(HANDLE_SHIPPING_QUERY, shippingQuery);
         } else {
-            LOGGER.info("Обработка события ShippingQuery, объект ShippingQuery Id: {}", shippingQuery.getId());
+            LOGGER.info(HANDLE_SHIPPING_QUERY_ID, shippingQuery.getId());
         }
 
         User user = getUser(shippingQuery.getFrom());

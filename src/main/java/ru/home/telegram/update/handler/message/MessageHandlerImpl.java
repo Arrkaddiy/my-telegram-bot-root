@@ -12,6 +12,8 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 public class MessageHandlerImpl extends AbstractUpdateHandler implements MessageHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageHandlerImpl.class);
+    private static final String HANDLE_MESSAGE = "Обработка события Message, объект Message: {}";
+    private static final String HANDLE_MESSAGE_ID = "Обработка события Message, объект Message Id: {}";
 
     public MessageHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -26,9 +28,9 @@ public class MessageHandlerImpl extends AbstractUpdateHandler implements Message
     @Override
     public BotApiMethod<?> handle(Message message) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Обработка события Message, объект Message: {}", message);
+            LOGGER.debug(HANDLE_MESSAGE, message);
         } else {
-            LOGGER.info("Обработка события Message, объект Message Id: {}", message.getMessageId());
+            LOGGER.info(HANDLE_MESSAGE_ID, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

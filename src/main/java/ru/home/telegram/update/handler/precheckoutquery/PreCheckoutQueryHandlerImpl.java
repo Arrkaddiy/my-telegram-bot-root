@@ -13,8 +13,6 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 public class PreCheckoutQueryHandlerImpl extends AbstractUpdateHandler implements PreCheckoutQueryHandler {
     private static final String HANDLE_PRE_CHECKOUT_QUERY =
             "Обработка события PreCheckoutQuery, объект PreCheckoutQuery: {}";
-    private static final String HANDLE_PRE_CHECKOUT_QUERY_ID =
-            "Обработка события PreCheckoutQuery, объект PreCheckoutQuery Id: {}";
 
     public PreCheckoutQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +23,7 @@ public class PreCheckoutQueryHandlerImpl extends AbstractUpdateHandler implement
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_PRE_CHECKOUT_QUERY, preCheckoutQuery);
         } else {
-            log.info(HANDLE_PRE_CHECKOUT_QUERY_ID, preCheckoutQuery.getId());
+            log.info(HANDLE_PRE_CHECKOUT_QUERY, preCheckoutQuery.getId());
         }
 
         User user = getUser(preCheckoutQuery.getFrom());

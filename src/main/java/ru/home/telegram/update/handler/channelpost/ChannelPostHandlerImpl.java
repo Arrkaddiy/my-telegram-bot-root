@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class ChannelPostHandlerImpl extends AbstractUpdateHandler implements ChannelPostHandler {
-    private static final String HANDLE_CHANNEL_POST =
-            "Обработка события ChannelPost, объект Message: {}";
-    private static final String HANDLE_CHANNEL_POST_ID =
-            "Обработка события ChannelPost, объект Message Id: {}";
+    private static final String HANDLE_CHANNEL_POST = "Обработка события ChannelPost, объект Message: {}";
 
     public ChannelPostHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +22,7 @@ public class ChannelPostHandlerImpl extends AbstractUpdateHandler implements Cha
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_CHANNEL_POST, message);
         } else {
-            log.info(HANDLE_CHANNEL_POST_ID, message.getMessageId());
+            log.info(HANDLE_CHANNEL_POST, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

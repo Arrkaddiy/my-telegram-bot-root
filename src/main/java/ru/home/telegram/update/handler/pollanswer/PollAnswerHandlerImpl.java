@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements PollAnswerHandler {
-    private static final String HANDLE_POLL_ANSWER =
-            "Обработка события PollAnswer, объект PollAnswer: {}";
-    private static final String HANDLE_POLL_ANSWER_ID =
-            "Обработка события PollAnswer, объект PollAnswer pollId: {}";
+    private static final String HANDLE_POLL_ANSWER = "Обработка события PollAnswer, объект PollAnswer: {}";
 
     public PollAnswerHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +22,7 @@ public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements Poll
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_POLL_ANSWER, pollAnswer);
         } else {
-            log.info(HANDLE_POLL_ANSWER_ID, pollAnswer.getPollId());
+            log.info(HANDLE_POLL_ANSWER, pollAnswer.getPollId());
         }
 
         User user = getUser(pollAnswer.getUser());

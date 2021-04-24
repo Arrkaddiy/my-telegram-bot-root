@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements CallBackQueryHandler {
-    private static final String HANDLE_CALL_BACK_QUERY =
-            "Обработка события CallbackQuery, объект CallbackQuery: {}";
-    private static final String HANDLE_CALL_BACK_QUERY_ID =
-            "Обработка события CallbackQuery, объект CallbackQuery Id: {}";
+    private static final String HANDLE_CALL_BACK_QUERY = "Обработка события CallbackQuery, объект CallbackQuery: {}";
 
     public CallBackQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +22,7 @@ public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements C
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_CALL_BACK_QUERY, callbackQuery);
         } else {
-            log.info(HANDLE_CALL_BACK_QUERY_ID, callbackQuery.getId());
+            log.info(HANDLE_CALL_BACK_QUERY, callbackQuery.getId());
         }
 
         User user = getUser(callbackQuery.getFrom());

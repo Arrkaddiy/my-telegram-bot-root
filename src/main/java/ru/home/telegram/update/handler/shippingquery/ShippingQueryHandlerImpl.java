@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class ShippingQueryHandlerImpl extends AbstractUpdateHandler implements ShippingQueryHandler {
-    private static final String HANDLE_SHIPPING_QUERY =
-            "Обработка события ShippingQuery, объект ShippingQuery: {}";
-    private static final String HANDLE_SHIPPING_QUERY_ID =
-            "Обработка события ShippingQuery, объект ShippingQuery Id: {}";
+    private static final String HANDLE_SHIPPING_QUERY = "Обработка события ShippingQuery, объект ShippingQuery: {}";
 
     public ShippingQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +22,7 @@ public class ShippingQueryHandlerImpl extends AbstractUpdateHandler implements S
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_SHIPPING_QUERY, shippingQuery);
         } else {
-            log.info(HANDLE_SHIPPING_QUERY_ID, shippingQuery.getId());
+            log.info(HANDLE_SHIPPING_QUERY, shippingQuery.getId());
         }
 
         User user = getUser(shippingQuery.getFrom());

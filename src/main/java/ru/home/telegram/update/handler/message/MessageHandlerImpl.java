@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class MessageHandlerImpl extends AbstractUpdateHandler implements MessageHandler {
-    private static final String HANDLE_MESSAGE =
-            "Обработка события Message, объект Message: {}";
-    private static final String HANDLE_MESSAGE_ID =
-            "Обработка события Message, объект Message Id: {}";
+    private static final String HANDLE_MESSAGE = "Обработка события Message, объект Message: {}";
 
     public MessageHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -31,7 +28,7 @@ public class MessageHandlerImpl extends AbstractUpdateHandler implements Message
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_MESSAGE, message);
         } else {
-            log.info(HANDLE_MESSAGE_ID, message.getMessageId());
+            log.info(HANDLE_MESSAGE, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

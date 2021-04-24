@@ -24,8 +24,6 @@ import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 public class UpdateFacadeImpl implements UpdateFacade {
     private static final String ROUTE_UPDATE =
             "Маршрутизация входящего запроса Update: {}";
-    private static final String ROUTE_UPDATE_ID =
-            "Маршрутизация входящего запроса Update Id: {}";
     private static final String ROUTE_UPDATE_CONTENT =
             "Определен контент входящего запроса UpdateContent: {}";
     private static final String ROUTE_UPDATE_CONTENT_NULL_EXCEPTION =
@@ -46,7 +44,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
         if (log.isDebugEnabled()) {
             log.debug(ROUTE_UPDATE, update);
         } else {
-            log.info(ROUTE_UPDATE_ID, update.getUpdateId());
+            log.info(ROUTE_UPDATE, update.getUpdateId());
         }
 
         UpdateContent updateContent = UpdateContent.getUpdateContent(update);

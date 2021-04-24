@@ -17,8 +17,6 @@ import ru.home.telegram.update.facade.UpdateFacade;
 public class MyTelegramBot extends TelegramWebhookBot {
     private static final String INPUT_UPDATE =
             "Получен входящий запрос Update: {}";
-    private static final String INPUT_UPDATE_ID =
-            "Получен входящий запрос Update Id: {}";
     private static final String INPUT_UPDATE_NULL =
             "Получен входящий запрос Update равным NULL!";
     private static final String UPDATE_EXCEPTION_BRE =
@@ -41,7 +39,7 @@ public class MyTelegramBot extends TelegramWebhookBot {
             if (log.isDebugEnabled()) {
                 log.debug(INPUT_UPDATE, update);
             } else {
-                log.info(INPUT_UPDATE_ID, update.getUpdateId());
+                log.info(INPUT_UPDATE, update.getUpdateId());
             }
 
             try {

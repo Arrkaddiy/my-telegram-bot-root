@@ -13,8 +13,6 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 public class ChosenInlineQueryHandlerImpl extends AbstractUpdateHandler implements ChosenInlineQueryHandler {
     private static final String HANDLE_CHOSEN_INLINE_QUERY =
             "Обработка события ChosenInlineQuery, объект ChosenInlineQuery: {}";
-    private static final String HANDLE_CHOSEN_INLINE_QUERY_ID =
-            "Обработка события ChosenInlineQuery, объект ChosenInlineQuery ResultId: {}";
 
     public ChosenInlineQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +23,7 @@ public class ChosenInlineQueryHandlerImpl extends AbstractUpdateHandler implemen
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_CHOSEN_INLINE_QUERY, chosenInlineQuery);
         } else {
-            log.info(HANDLE_CHOSEN_INLINE_QUERY_ID, chosenInlineQuery.getResultId());
+            log.info(HANDLE_CHOSEN_INLINE_QUERY, chosenInlineQuery.getResultId());
         }
 
         User user = getUser(chosenInlineQuery.getFrom());

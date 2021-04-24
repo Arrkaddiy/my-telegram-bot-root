@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class EditedMessageHandlerImpl extends AbstractUpdateHandler implements EditedMessageHandler {
-    private static final String HANDLE_EDITED_MESSAGE =
-            "Обработка события EditedMessage, объект Message: {}";
-    private static final String HANDLE_EDITED_MESSAGE_ID =
-            "Обработка события EditedMessage, объект Message Id: {}";
+    private static final String HANDLE_EDITED_MESSAGE = "Обработка события EditedMessage, объект Message: {}";
 
     public EditedMessageHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +22,7 @@ public class EditedMessageHandlerImpl extends AbstractUpdateHandler implements E
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_EDITED_MESSAGE, message);
         } else {
-            log.info(HANDLE_EDITED_MESSAGE_ID, message.getMessageId());
+            log.info(HANDLE_EDITED_MESSAGE, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

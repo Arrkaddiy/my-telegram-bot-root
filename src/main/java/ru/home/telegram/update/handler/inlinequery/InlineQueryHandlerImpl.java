@@ -11,10 +11,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
 public class InlineQueryHandlerImpl extends AbstractUpdateHandler implements InlineQueryHandler {
-    private static final String HANDLE_INLINE_QUERY =
-            "Обработка события InlineQuery, объект InlineQuery: {}";
-    private static final String HANDLE_INLINE_QUERY_ID =
-            "Обработка события InlineQuery, объект InlineQuery Id: {}";
+    private static final String HANDLE_INLINE_QUERY = "Обработка события InlineQuery, объект InlineQuery: {}";
 
     public InlineQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -25,7 +22,7 @@ public class InlineQueryHandlerImpl extends AbstractUpdateHandler implements Inl
         if (log.isDebugEnabled()) {
             log.debug(HANDLE_INLINE_QUERY, inlineQuery);
         } else {
-            log.info(HANDLE_INLINE_QUERY_ID, inlineQuery.getId());
+            log.info(HANDLE_INLINE_QUERY, inlineQuery.getId());
         }
 
         User user = getUser(inlineQuery.getFrom());

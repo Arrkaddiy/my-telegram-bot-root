@@ -1,8 +1,7 @@
 package ru.home.telegram.service;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.home.telegram.db.entity.User;
@@ -10,9 +9,13 @@ import ru.home.telegram.db.repository.UserRepository;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final String SAVE_USER = "Сохранение пользователя User: {}";
+    private static final String DELETE_USER = "Удаление пользователя User: {}";
+    private static final String GET_USER_BY_ID = "Поиск пользователя по Id: {}";
+    private static final String GET_USER_BY_TELEGRAM_ID = "Поиск пользователя по Telegram Id: {}";
 
     private final UserRepository userRepository;
 
@@ -23,10 +26,10 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void save(User user) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Сохранение пользователя User: {}", user);
+        if (log.isDebugEnabled()) {
+            log.debug(SAVE_USER, user);
         } else {
-            LOGGER.info("Сохранение пользователя User Id {}", user.getId());
+            log.info(SAVE_USER, user.getId());
         }
 
         user.setUpdatable(LocalDateTime.now());
@@ -40,10 +43,10 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete(User user) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Удаление пользователя User: {}", user);
+        if (log.isDebugEnabled()) {
+            log.debug(DELETE_USER, user);
         } else {
-            LOGGER.info("Удаление пользователя User Id: {}", user.getId());
+            log.info(DELETE_USER, user.getId());
         }
 
         userRepository.delete(user);
@@ -56,7 +59,7 @@ public class UserServiceImpl implements UserService {
      * @return Объект {@link User}
      */
     public User getUserById(Long id) {
-        LOGGER.info("Поиск пользователя по Id: {}", id);
+        log.info(GET_USER_BY_ID, id);
         return userRepository.findById(id).orElse(null);
     }
 
@@ -67,7 +70,7 @@ public class UserServiceImpl implements UserService {
      * @return Объект {@link User}
      */
     public User getUserByTelegramId(Integer id) {
-        LOGGER.info("Поиск пользователя по Telegram Id: {}", id);
+        log.info(GET_USER_BY_TELEGRAM_ID, id);
         return userRepository.findByTelegramId(id).orElse(null);
     }
 }

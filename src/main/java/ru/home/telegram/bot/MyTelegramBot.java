@@ -15,11 +15,16 @@ import ru.home.telegram.update.facade.UpdateFacade;
 @Slf4j
 @RequiredArgsConstructor
 public class MyTelegramBot extends TelegramWebhookBot {
-    private static final String INPUT_UPDATE = "Получен входящий запрос Update: {}";
-    private static final String INPUT_UPDATE_ID = "Получен входящий запрос Update Id: {}";
-    private static final String INPUT_UPDATE_NULL = "Получен входящий запрос Update равным NULL!";
-    private static final String UPDATE_EXCEPTION_BRE = "В ходе обработки запроса возникла ошибка! Exception: {}";
-    private static final String UPDATE_EXCEPTION = "В ходе обработки запроса возникла непредвиденная ошибка! Exception: {}";
+    private static final String INPUT_UPDATE =
+            "Получен входящий запрос Update: {}";
+    private static final String INPUT_UPDATE_ID =
+            "Получен входящий запрос Update Id: {}";
+    private static final String INPUT_UPDATE_NULL =
+            "Получен входящий запрос Update равным NULL!";
+    private static final String UPDATE_EXCEPTION_BRE =
+            "В ходе обработки запроса возникла ошибка! BotRuntimeException: {}";
+    private static final String UPDATE_EXCEPTION =
+            "В ходе обработки запроса возникла непредвиденная ошибка! Exception: {}";
 
     private final UpdateFacade updateFacade;
     private final ServiceConfiguration serviceConfiguration;

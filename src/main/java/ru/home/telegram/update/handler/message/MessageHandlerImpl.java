@@ -3,6 +3,8 @@ package ru.home.telegram.update.handler.message;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.home.telegram.constant.BotCommand;
+import ru.home.telegram.constant.MessageEntityType;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.constant.BotStateType;
@@ -12,6 +14,7 @@ import ru.home.telegram.update.handler.AbstractUpdateHandler;
 @Slf4j
 public class MessageHandlerImpl extends AbstractUpdateHandler implements MessageHandler {
     private static final String HANDLE_MESSAGE = "Обработка события Message, объект Message: {}";
+    private static final String HANDLE_MESSAGE_RESTART = "Перезапуск клиента Telegram Bot'а для User {}";
 
     public MessageHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -32,8 +35,22 @@ public class MessageHandlerImpl extends AbstractUpdateHandler implements Message
         }
 
         User user = getUser(message.getFrom());
-        BotStateType currentState = user.getCurrentState();
+
+        BotStateType currentState;
+        if (isNeedRestart(message)) {
+            log.info(HANDLE_MESSAGE_RESTART, user.getTelegramId());
+            currentState = BotStateType.START;
+        } else {
+            currentState = user.getCurrentState();
+        }
 
         return stateFacade.handleMessage(currentState, user, message);
+    }
+
+    private boolean isNeedRestart(Message message) {
+        return Boolean.TRUE.equals(message.getEntities().stream()
+                .filter(messageEntity -> MessageEntityType.BOT_COMMAND.getType().equals(messageEntity.getType()))
+                .anyMatch(messageEntity -> BotCommand.RESTART.getCommand().equals(messageEntity.getText())));
+
     }
 }

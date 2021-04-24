@@ -9,6 +9,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum BotCommand {
     START("/start"),
+    RESTART("/restart"),
     HELP("/help");
 
     @Getter

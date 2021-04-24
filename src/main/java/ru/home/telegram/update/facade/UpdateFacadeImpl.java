@@ -22,11 +22,16 @@ import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 @Slf4j
 @RequiredArgsConstructor
 public class UpdateFacadeImpl implements UpdateFacade {
-    private static final String ROUTE_UPDATE = "Маршрутизация входящего запроса Update: {}";
-    private static final String ROUTE_UPDATE_ID = "Маршрутизация входящего запроса Update Id: {}";
-    private static final String ROUTE_UPDATE_CONTENT = "Определен контент входящего запроса UpdateContent: {}";
-    private static final String ROUTE_UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения!";
-    private static final String ROUTE_UPDATE_CONTENT_HANDLER_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: ";
+    private static final String ROUTE_UPDATE =
+            "Маршрутизация входящего запроса Update: {}";
+    private static final String ROUTE_UPDATE_ID =
+            "Маршрутизация входящего запроса Update Id: {}";
+    private static final String ROUTE_UPDATE_CONTENT =
+            "Определен контент входящего запроса UpdateContent: {}";
+    private static final String ROUTE_UPDATE_CONTENT_NULL_EXCEPTION =
+            "Ошибка определения контента входящего сообщения! Update: ";
+    private static final String ROUTE_UPDATE_CONTENT_HANDLER_EXCEPTION =
+            "Ошибка определения обработчика контента входящего сообщения! UpdateContent: ";
 
     private final ApplicationContext context;
 
@@ -47,7 +52,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
         UpdateContent updateContent = UpdateContent.getUpdateContent(update);
 
         if (updateContent == null) {
-            throw new BotRuntimeException(ROUTE_UPDATE_CONTENT_NULL_ERROR);
+            throw new BotRuntimeException(ROUTE_UPDATE_CONTENT_NULL_EXCEPTION + update);
         }
 
         if (log.isDebugEnabled()) {
@@ -78,7 +83,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
             case POLL_ANSWER:
                 return context.getBean(PollAnswerHandler.class).handle(update.getPollAnswer());
             default:
-                throw new BotRuntimeException(ROUTE_UPDATE_CONTENT_HANDLER_ERROR + updateContent);
+                throw new BotRuntimeException(ROUTE_UPDATE_CONTENT_HANDLER_EXCEPTION + updateContent);
         }
     }
 }

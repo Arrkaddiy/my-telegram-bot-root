@@ -57,16 +57,31 @@ public class MyTelegramBot extends TelegramWebhookBot {
         return null;
     }
 
+    /**
+     * Получение WebHook Telegram Bot'а
+     *
+     * @return WebHook Telegram Bot'а
+     */
     @Override
     public String getBotPath() {
         return serviceConfiguration.getBotPath();
     }
 
+    /**
+     * Получение UserName Telegram Bot'а
+     *
+     * @return UserName Telegram Bot'а
+     */
     @Override
     public String getBotUsername() {
         return serviceConfiguration.getBotUsername();
     }
 
+    /**
+     * Получение Token Telegram Bot'а
+     *
+     * @return Token Telegram Bot'а
+     */
     @Override
     public String getBotToken() {
         return serviceConfiguration.getBotToken();

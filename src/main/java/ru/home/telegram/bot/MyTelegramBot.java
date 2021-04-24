@@ -1,23 +1,24 @@
 package ru.home.telegram.bot;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.home.telegram.config.ServiceConfiguration;
+import ru.home.telegram.exception.BotRuntimeException;
 import ru.home.telegram.update.facade.UpdateFacade;
 
 /**
  * Telegram Bot.
  */
+@Slf4j
 @RequiredArgsConstructor
 public class MyTelegramBot extends TelegramWebhookBot {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyTelegramBot.class);
     private static final String INPUT_UPDATE = "Получен входящий запрос Update: {}";
     private static final String INPUT_UPDATE_ID = "Получен входящий запрос Update Id: {}";
     private static final String INPUT_UPDATE_NULL = "Получен входящий запрос Update равным NULL!";
+    private static final String UPDATE_EXCEPTION_BRE = "В ходе обработки запроса возникла ошибка! Exception: {}";
     private static final String UPDATE_EXCEPTION = "В ходе обработки запроса возникла непредвиденная ошибка! Exception: {}";
 
     private final UpdateFacade updateFacade;
@@ -32,22 +33,23 @@ public class MyTelegramBot extends TelegramWebhookBot {
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if (update != null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(INPUT_UPDATE, update);
+            if (log.isDebugEnabled()) {
+                log.debug(INPUT_UPDATE, update);
             } else {
-                LOGGER.info(INPUT_UPDATE_ID, update.getUpdateId());
+                log.info(INPUT_UPDATE_ID, update.getUpdateId());
             }
 
             try {
                 return updateFacade.route(update);
+            } catch (BotRuntimeException bre) {
+                log.error(UPDATE_EXCEPTION_BRE, bre.getMessage(), bre);
             } catch (Exception e) {
-                LOGGER.error(UPDATE_EXCEPTION, e.getMessage(), e);
-                return null;
+                log.error(UPDATE_EXCEPTION, e.getMessage(), e);
             }
         } else {
-            LOGGER.error(INPUT_UPDATE_NULL);
-            return null;
+            log.error(INPUT_UPDATE_NULL);
         }
+        return null;
     }
 
     @Override

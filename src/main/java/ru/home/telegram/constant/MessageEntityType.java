@@ -1,12 +1,12 @@
 package ru.home.telegram.constant;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 
 import java.util.Arrays;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum MessageEntityType {
 
     BOLD("bold"),
@@ -26,7 +26,7 @@ public enum MessageEntityType {
     URL("url");
 
     @Getter
-    private String type;
+    private final String type;
 
     public static MessageEntityType getMessageEntityTypeByMessageEntity(MessageEntity messageEntity) {
         return Arrays.stream(values())

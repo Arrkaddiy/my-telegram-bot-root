@@ -13,8 +13,7 @@ public enum UpdateContent {
     SHIPPING_QUERY,
     PRE_CHECKOUT_QUERY,
     POLL,
-    POLL_ANSWER,
-    NULL;
+    POLL_ANSWER;
 
     public static UpdateContent getUpdateContent(Update update) {
         if (update.hasMessage()) {
@@ -40,7 +39,7 @@ public enum UpdateContent {
         } else if (update.hasPollAnswer()) {
             return UpdateContent.POLL_ANSWER;
         } else {
-            return UpdateContent.NULL;
+            return null;
         }
     }
 }

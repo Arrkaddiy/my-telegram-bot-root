@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.ChosenInlineQuery;
@@ -22,6 +23,7 @@ import ru.home.telegram.state.start.StartState;
 public class StateFacadeImpl implements StateFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(StateFacadeImpl.class);
     private static final String STATE_FACADE_ROUTE = "Маршрутизация состояния StateType: {}";
+    private static final String STATE_FACADE_ROUTE_MESSAGE_ERROR = "Во время обработки возникли ошибки, ";
 
     private final ApplicationContext context;
 
@@ -133,5 +135,13 @@ public class StateFacadeImpl implements StateFacade {
             default:
                 return null;
         }
+    }
+
+    private SendMessage getErrorMessage(User user) {
+        return SendMessage.builder()
+                .chatId(String.valueOf(user.getTelegramId()))
+                .text("ERROR")
+                .build();
+
     }
 }

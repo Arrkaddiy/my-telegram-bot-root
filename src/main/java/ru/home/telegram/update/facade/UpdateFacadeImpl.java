@@ -1,11 +1,11 @@
 package ru.home.telegram.update.facade;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.home.telegram.exception.BotRuntimeException;
 import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.callbackquery.CallBackQueryHandler;
 import ru.home.telegram.update.handler.channelpost.ChannelPostHandler;
@@ -19,14 +19,14 @@ import ru.home.telegram.update.handler.pollanswer.PollAnswerHandler;
 import ru.home.telegram.update.handler.precheckoutquery.PreCheckoutQueryHandler;
 import ru.home.telegram.update.handler.shippingquery.ShippingQueryHandler;
 
+@Slf4j
 @RequiredArgsConstructor
 public class UpdateFacadeImpl implements UpdateFacade {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateFacadeImpl.class);
     private static final String ROUTE_UPDATE = "Маршрутизация входящего запроса Update: {}";
     private static final String ROUTE_UPDATE_ID = "Маршрутизация входящего запроса Update Id: {}";
     private static final String ROUTE_UPDATE_CONTENT = "Определен контент входящего запроса UpdateContent: {}";
-    private static final String ROUTE_UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения! Update: {}";
-    private static final String ROUTE_UPDATE_CONTENT_HANDLER_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: {}";
+    private static final String ROUTE_UPDATE_CONTENT_NULL_ERROR = "Ошибка определения контента входящего сообщения!";
+    private static final String ROUTE_UPDATE_CONTENT_HANDLER_ERROR = "Ошибка определения обработчика контента входящего сообщения! UpdateContent: ";
 
     private final ApplicationContext context;
 
@@ -38,21 +38,20 @@ public class UpdateFacadeImpl implements UpdateFacade {
      */
     @Override
     public BotApiMethod<?> route(Update update) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(ROUTE_UPDATE, update);
+        if (log.isDebugEnabled()) {
+            log.debug(ROUTE_UPDATE, update);
         } else {
-            LOGGER.info(ROUTE_UPDATE_ID, update.getUpdateId());
+            log.info(ROUTE_UPDATE_ID, update.getUpdateId());
         }
 
         UpdateContent updateContent = UpdateContent.getUpdateContent(update);
 
-        if (UpdateContent.NULL == updateContent) {
-            LOGGER.error(ROUTE_UPDATE_CONTENT_NULL_ERROR, update);
-            return null;
+        if (updateContent == null) {
+            throw new BotRuntimeException(ROUTE_UPDATE_CONTENT_NULL_ERROR);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(ROUTE_UPDATE_CONTENT, updateContent);
+        if (log.isDebugEnabled()) {
+            log.debug(ROUTE_UPDATE_CONTENT, updateContent);
         }
 
         switch (updateContent) {
@@ -79,8 +78,7 @@ public class UpdateFacadeImpl implements UpdateFacade {
             case POLL_ANSWER:
                 return context.getBean(PollAnswerHandler.class).handle(update.getPollAnswer());
             default:
-                LOGGER.error(ROUTE_UPDATE_CONTENT_HANDLER_ERROR, updateContent);
-                return null;
+                throw new BotRuntimeException(ROUTE_UPDATE_CONTENT_HANDLER_ERROR + updateContent);
         }
     }
 }

@@ -11,7 +11,7 @@ public class StartStateImpl implements StartState {
     public BotApiMethod<?> handleMessage(User user, Message message) {
         SendMessage errorMessage = new SendMessage();
         errorMessage.setChatId(String.valueOf(user.getTelegramId()));
-        errorMessage.setText("Ошибка ");
+        errorMessage.setText("START");
         return errorMessage;
     }
 

@@ -38,7 +38,8 @@ public abstract class AbstractUpdateHandler {
             Boolean canJoinGroups = telegramUser.getCanJoinGroups();
             Boolean canReadAllGroupMessages = telegramUser.getCanReadAllGroupMessages();
             Boolean supportInlineQueries = telegramUser.getSupportInlineQueries();
-            user = new User(telegramUserId,
+            user = new User(
+                    telegramUserId,
                     userName,
                     firstName,
                     lastName,

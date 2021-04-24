@@ -1,7 +1,6 @@
 package ru.home.telegram.update.handler.editedmessage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.db.entity.User;
@@ -10,10 +9,12 @@ import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
+@Slf4j
 public class EditedMessageHandlerImpl extends AbstractUpdateHandler implements EditedMessageHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EditedMessageHandlerImpl.class);
-    private static final String HANDLE_EDITED_MESSAGE = "Обработка события EditedMessage, объект Message: {}";
-    private static final String HANDLE_EDITED_MESSAGE_ID = "Обработка события EditedMessage, объект Message Id: {}";
+    private static final String HANDLE_EDITED_MESSAGE =
+            "Обработка события EditedMessage, объект Message: {}";
+    private static final String HANDLE_EDITED_MESSAGE_ID =
+            "Обработка события EditedMessage, объект Message Id: {}";
 
     public EditedMessageHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -21,10 +22,10 @@ public class EditedMessageHandlerImpl extends AbstractUpdateHandler implements E
 
     @Override
     public BotApiMethod<?> handle(Message message) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(HANDLE_EDITED_MESSAGE, message);
+        if (log.isDebugEnabled()) {
+            log.debug(HANDLE_EDITED_MESSAGE, message);
         } else {
-            LOGGER.info(HANDLE_EDITED_MESSAGE_ID, message.getMessageId());
+            log.info(HANDLE_EDITED_MESSAGE_ID, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

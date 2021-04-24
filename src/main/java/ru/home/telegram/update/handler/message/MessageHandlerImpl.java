@@ -1,7 +1,6 @@
 package ru.home.telegram.update.handler.message;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.db.entity.User;
@@ -10,10 +9,12 @@ import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
+@Slf4j
 public class MessageHandlerImpl extends AbstractUpdateHandler implements MessageHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageHandlerImpl.class);
-    private static final String HANDLE_MESSAGE = "Обработка события Message, объект Message: {}";
-    private static final String HANDLE_MESSAGE_ID = "Обработка события Message, объект Message Id: {}";
+    private static final String HANDLE_MESSAGE =
+            "Обработка события Message, объект Message: {}";
+    private static final String HANDLE_MESSAGE_ID =
+            "Обработка события Message, объект Message Id: {}";
 
     public MessageHandlerImpl(UserService userService, StateFacade stateFacade) {
         super(userService, stateFacade);
@@ -27,10 +28,10 @@ public class MessageHandlerImpl extends AbstractUpdateHandler implements Message
      */
     @Override
     public BotApiMethod<?> handle(Message message) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(HANDLE_MESSAGE, message);
+        if (log.isDebugEnabled()) {
+            log.debug(HANDLE_MESSAGE, message);
         } else {
-            LOGGER.info(HANDLE_MESSAGE_ID, message.getMessageId());
+            log.info(HANDLE_MESSAGE_ID, message.getMessageId());
         }
 
         User user = getUser(message.getFrom());

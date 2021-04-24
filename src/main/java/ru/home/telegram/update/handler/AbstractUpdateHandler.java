@@ -1,33 +1,44 @@
 package ru.home.telegram.update.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.facade.StateFacade;
 
+@Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractUpdateHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractUpdateHandler.class);
+    private static final String SEARCH_USER =
+            "Поиск пользователя в базе данных Telegram User: {}";
+    private static final String SEARCH_USER_ID =
+            "Поиск пользователя в базе данных по Telegram Id: {}";
+    private static final String CREATE_NEW_USER =
+            "Создаем нового пользователя под данным Telegram User: {}";
+    private static final String CREATE_NEW_USER_ID =
+            "Создаем нового пользователя под данным Telegram Id: {}";
+    private static final String GET_USER =
+            "Получен пользователь User: {}";
+    private static final String GET_USER_ID =
+            "Получен пользователь User Id: {}";
 
     private final UserService userService;
     protected final StateFacade stateFacade;
 
     protected User getUser(org.telegram.telegrambots.meta.api.objects.User telegramUser) {
         Integer telegramUserId = telegramUser.getId();
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Поиск пользователя в базе данных Telegram User: {}", telegramUser);
+        if (log.isDebugEnabled()) {
+            log.debug(SEARCH_USER, telegramUser);
         } else {
-            LOGGER.info("Поиск пользователя в базе данных по Telegram Id: {}", telegramUserId);
+            log.info(SEARCH_USER_ID, telegramUserId);
         }
 
         User user = userService.getUserByTelegramId(telegramUserId);
         if (user == null) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Создаем нового пользователя под данным Telegram User: {}", telegramUser);
+            if (log.isDebugEnabled()) {
+                log.debug(CREATE_NEW_USER, telegramUser);
             } else {
-                LOGGER.info("Создаем нового пользователя под данным Telegram Id: {}", telegramUserId);
+                log.info(CREATE_NEW_USER_ID, telegramUserId);
             }
 
             String userName = telegramUser.getUserName();
@@ -51,10 +62,10 @@ public abstract class AbstractUpdateHandler {
             userService.save(user);
         }
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Получен пользователь User: {}", user);
+        if (log.isDebugEnabled()) {
+            log.debug(GET_USER, user);
         } else {
-            LOGGER.info("Получен пользователь User Id: {}", user.getId());
+            log.info(GET_USER_ID, user.getId());
         }
         return user;
     }

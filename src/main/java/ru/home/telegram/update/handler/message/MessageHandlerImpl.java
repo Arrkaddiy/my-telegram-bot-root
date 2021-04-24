@@ -49,8 +49,10 @@ public class MessageHandlerImpl extends AbstractUpdateHandler implements Message
 
     private boolean isNeedRestart(Message message) {
         return Boolean.TRUE.equals(message.getEntities().stream()
-                .filter(messageEntity -> MessageEntityType.BOT_COMMAND.getType().equals(messageEntity.getType()))
-                .anyMatch(messageEntity -> BotCommand.RESTART.getCommand().equals(messageEntity.getText())));
+                .filter(messageEntity -> MessageEntityType.BOT_COMMAND.equals(
+                                MessageEntityType.getMessageEntityTypeByMessageEntity(messageEntity)))
+                .anyMatch(messageEntity -> BotCommand.RESTART.equals(
+                                BotCommand.getBotCommandByMessageEntity(messageEntity))));
 
     }
 }

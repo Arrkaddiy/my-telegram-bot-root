@@ -5,12 +5,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
-public class EditedMessageHandlerImpl extends AbstractUpdateHandler implements EditedMessageHandler {
+public class EditedMessageHandlerImpl extends AbstractUpdateHandler<Message> implements EditedMessageHandler {
     private static final String HANDLE_EDITED_MESSAGE = "Обработка события EditedMessage, объект Message: {}";
 
     public EditedMessageHandlerImpl(UserService userService, StateFacade stateFacade) {
@@ -26,8 +26,6 @@ public class EditedMessageHandlerImpl extends AbstractUpdateHandler implements E
         }
 
         User user = getUser(message.getFrom());
-        BotStateType currentState = user.getCurrentState();
-
-        return stateFacade.handleEditedMessage(currentState, user, message);
+        return stateRoute(UpdateContent.EDITED_MESSAGE, user, message);
     }
 }

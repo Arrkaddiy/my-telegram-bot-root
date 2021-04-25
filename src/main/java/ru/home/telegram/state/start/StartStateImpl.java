@@ -4,8 +4,9 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.home.telegram.db.entity.User;
+import ru.home.telegram.state.AbstractState;
 
-public class StartStateImpl implements StartState {
+public class StartStateImpl extends AbstractState implements StartState {
 
     @Override
     public BotApiMethod<?> handleMessage(User user, Message message) {

@@ -1,5 +1,6 @@
 package ru.home.telegram.state;
 
+import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -10,8 +11,11 @@ import org.telegram.telegrambots.meta.api.objects.payments.ShippingQuery;
 import org.telegram.telegrambots.meta.api.objects.polls.Poll;
 import org.telegram.telegrambots.meta.api.objects.polls.PollAnswer;
 import ru.home.telegram.db.entity.User;
+import ru.home.telegram.update.constant.UpdateContent;
 
 public interface State {
+
+    BotApiMethod<?> routeHandle(UpdateContent updateContent, User user, BotApiObject botApiObject);
 
     BotApiMethod<?> handleCallBackQuery(User user, CallbackQuery callbackQuery);
 

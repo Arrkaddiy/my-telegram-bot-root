@@ -5,12 +5,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
-public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements CallBackQueryHandler {
+public class CallBackQueryHandlerImpl extends AbstractUpdateHandler<CallbackQuery> implements CallBackQueryHandler {
     private static final String HANDLE_CALL_BACK_QUERY = "Обработка события CallbackQuery, объект CallbackQuery: {}";
 
     public CallBackQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
@@ -26,8 +26,6 @@ public class CallBackQueryHandlerImpl extends AbstractUpdateHandler implements C
         }
 
         User user = getUser(callbackQuery.getFrom());
-        BotStateType currentState = user.getCurrentState();
-
-        return stateFacade.handleCallBackQuery(currentState, user, callbackQuery);
+        return stateRoute(UpdateContent.CALL_BACK_QUERY, user, callbackQuery);
     }
 }

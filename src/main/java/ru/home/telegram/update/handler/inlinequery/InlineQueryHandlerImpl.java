@@ -5,12 +5,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.inlinequery.InlineQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
-public class InlineQueryHandlerImpl extends AbstractUpdateHandler implements InlineQueryHandler {
+public class InlineQueryHandlerImpl extends AbstractUpdateHandler<InlineQuery> implements InlineQueryHandler {
     private static final String HANDLE_INLINE_QUERY = "Обработка события InlineQuery, объект InlineQuery: {}";
 
     public InlineQueryHandlerImpl(UserService userService, StateFacade stateFacade) {
@@ -26,8 +26,6 @@ public class InlineQueryHandlerImpl extends AbstractUpdateHandler implements Inl
         }
 
         User user = getUser(inlineQuery.getFrom());
-        BotStateType currentState = user.getCurrentState();
-
-        return stateFacade.handleInlineQuery(currentState, user, inlineQuery);
+        return stateRoute(UpdateContent.INLINE_QUERY, user, inlineQuery);
     }
 }

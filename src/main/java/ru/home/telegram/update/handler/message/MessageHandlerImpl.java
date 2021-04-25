@@ -9,10 +9,11 @@ import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
 import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
-public class MessageHandlerImpl extends AbstractUpdateHandler implements MessageHandler {
+public class MessageHandlerImpl extends AbstractUpdateHandler<Message> implements MessageHandler {
     private static final String HANDLE_MESSAGE = "Обработка события Message, объект Message: {}";
     private static final String HANDLE_MESSAGE_RESTART = "Перезапуск клиента Telegram Bot'а для User {}";
 
@@ -36,15 +37,12 @@ public class MessageHandlerImpl extends AbstractUpdateHandler implements Message
 
         User user = getUser(message.getFrom());
 
-        BotStateType currentState;
         if (isNeedRestart(message)) {
             log.info(HANDLE_MESSAGE_RESTART, user.getTelegramId());
-            currentState = BotStateType.START;
-        } else {
-            currentState = user.getCurrentState();
+            saveUserCurrentState(BotStateType.START, user);
         }
 
-        return stateFacade.handleMessage(currentState, user, message);
+        return stateRoute(UpdateContent.MESSAGE, user, message);
     }
 
     private boolean isNeedRestart(Message message) {

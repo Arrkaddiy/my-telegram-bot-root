@@ -5,12 +5,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.payments.PreCheckoutQuery;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
-public class PreCheckoutQueryHandlerImpl extends AbstractUpdateHandler implements PreCheckoutQueryHandler {
+public class PreCheckoutQueryHandlerImpl extends AbstractUpdateHandler<PreCheckoutQuery> implements PreCheckoutQueryHandler {
     private static final String HANDLE_PRE_CHECKOUT_QUERY =
             "Обработка события PreCheckoutQuery, объект PreCheckoutQuery: {}";
 
@@ -27,8 +27,6 @@ public class PreCheckoutQueryHandlerImpl extends AbstractUpdateHandler implement
         }
 
         User user = getUser(preCheckoutQuery.getFrom());
-        BotStateType currentState = user.getCurrentState();
-
-        return stateFacade.handlePreCheckoutQuery(currentState, user, preCheckoutQuery);
+        return stateRoute(UpdateContent.PRE_CHECKOUT_QUERY, user, preCheckoutQuery);
     }
 }

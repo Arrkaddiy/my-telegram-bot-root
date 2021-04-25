@@ -5,12 +5,12 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.polls.PollAnswer;
 import ru.home.telegram.db.entity.User;
 import ru.home.telegram.service.UserService;
-import ru.home.telegram.state.constant.BotStateType;
 import ru.home.telegram.state.facade.StateFacade;
+import ru.home.telegram.update.constant.UpdateContent;
 import ru.home.telegram.update.handler.AbstractUpdateHandler;
 
 @Slf4j
-public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements PollAnswerHandler {
+public class PollAnswerHandlerImpl extends AbstractUpdateHandler<PollAnswer> implements PollAnswerHandler {
     private static final String HANDLE_POLL_ANSWER = "Обработка события PollAnswer, объект PollAnswer: {}";
 
     public PollAnswerHandlerImpl(UserService userService, StateFacade stateFacade) {
@@ -26,8 +26,6 @@ public class PollAnswerHandlerImpl extends AbstractUpdateHandler implements Poll
         }
 
         User user = getUser(pollAnswer.getUser());
-        BotStateType currentState = user.getCurrentState();
-
-        return stateFacade.handlePollAnswer(currentState, user, pollAnswer);
+        return stateRoute(UpdateContent.POLL_ANSWER, user, pollAnswer);
     }
 }
